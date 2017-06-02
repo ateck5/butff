@@ -17,6 +17,84 @@
 
 
 <ion-content padding>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur doloremque facere fugit id ipsa nobis
-        quibusdam sint ut! Animi blanditiis fugit hic iusto libero magni quisquam rem, repudiandae ut veritatis.</p>
+    <ion-list>
+        <ion-list *ngFor="let appointment of appointments; let id = index">
+            <ion-list-header color="primary">
+                <h2>{{appointment.title}}</h2>
+                <button ion-button clear item-right large>
+                    <ion-icon id="icon{{id}}" name="arrow-dropright" class="white" (click)="toggleActive(id)"></ion-icon>
+                </button>
+            </ion-list-header>
+            <ion-list id="item{{id}}" class="hidden randomclass">
+                <ion-item>
+                    {{appointment.value}}
+                </ion-item>
+                <ion-item>
+                    {{appointment.value}}
+                </ion-item>
+                <ion-item>
+                    {{appointment.value}}
+                </ion-item>
+            </ion-list>
+        </ion-list>
+        <!--<ion-list>-->
+            <!--<ion-list-header color="primary">-->
+                <!--<h2>Appointment 1</h2>-->
+                <!--<button ion-button clear item-right large>-->
+                    <!--<ion-icon name="arrow-dropdown" class="white" (click)="toggleActive(0)"></ion-icon>-->
+                <!--</button>-->
+            <!--</ion-list-header>-->
+            <!--<ion-list class="hidden">-->
+                <!--<ion-item>-->
+                    <!--item1-->
+                <!--</ion-item>-->
+                <!--<ion-item>-->
+                    <!--item2-->
+                <!--</ion-item>-->
+                <!--<ion-item>-->
+                    <!--item3-->
+                <!--</ion-item>-->
+            <!--</ion-list>-->
+        <!--</ion-list>-->
+
+        <!--<ion-list>-->
+            <!--<ion-list-header color="primary">-->
+                <!--<h2>Appointment 2</h2>-->
+                <!--<button ion-button clear item-right large>-->
+                    <!--<ion-icon name="arrow-dropdown" class="white" (click)="toggleActive(1)"></ion-icon>-->
+                <!--</button>-->
+            <!--</ion-list-header>-->
+            <!--<ion-list>-->
+                <!--<ion-item>-->
+                    <!--item1-->
+                <!--</ion-item>-->
+                <!--<ion-item>-->
+                    <!--item2-->
+                <!--</ion-item>-->
+                <!--<ion-item>-->
+                    <!--item3-->
+                <!--</ion-item>-->
+            <!--</ion-list>-->
+        <!--</ion-list>-->
+
+        <!--<ion-list>-->
+            <!--<ion-list-header color="primary">-->
+                <!--<h2>Appointment 3</h2>-->
+                <!--<button ion-button clear item-right large>-->
+                    <!--<ion-icon name="arrow-dropdown" class="white" (click)="toggleActive(2)"></ion-icon>-->
+                <!--</button>-->
+            <!--</ion-list-header>-->
+            <!--<ion-list class="hidden">-->
+                <!--<ion-item>-->
+                    <!--item1-->
+                <!--</ion-item>-->
+                <!--<ion-item>-->
+                    <!--item2-->
+                <!--</ion-item>-->
+                <!--<ion-item>-->
+                    <!--item3-->
+                <!--</ion-item>-->
+            <!--</ion-list>-->
+        <!--</ion-list>-->
+    </ion-list>
 </ion-content>

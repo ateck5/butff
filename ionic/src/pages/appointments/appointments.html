@@ -22,79 +22,63 @@
             <ion-list-header color="primary">
                 <h2>{{appointment.title}}</h2>
                 <button ion-button clear item-right large>
-                    <ion-icon id="icon{{id}}" name="arrow-dropright" class="white" (click)="toggleActive(id)"></ion-icon>
+                    <ion-icon id="iconEdit{{id}}" name="create" class="hidden white"></ion-icon>
+                </button>
+                <button ion-button clear item-right large>
+                    <ion-icon id="iconArrow{{id}}" name="arrow-dropright" class="white" (click)="toggleActive(id)"></ion-icon>
                 </button>
             </ion-list-header>
             <ion-list id="item{{id}}" class="hidden randomclass">
                 <ion-item>
-                    {{appointment.value}}
+                    {{appointment.type}}
+                    <p item-right class="blue">
+                        type
+                    </p>
+                </ion-item>
+                <ion-item text-wrap>
+                    {{appointment.description}}
+                    <p item-right class="blue">
+                        description
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="appointment.country">
+                    {{appointment.country}}
+                    <p item-right class="blue">
+                        country
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="appointment.city">
+                    {{appointment.city}}
+                    <p item-right class="blue">
+                        city
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="appointment.street && appointment.streetNumber">
+                    {{appointment.street + " " + appointment.streetNumber}}
+                    <p item-right class="blue">
+                        street
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="appointment.postcode">
+                    {{appointment.postcode}}
+                    <p item-right class="blue">
+                        postcode
+                    </p>
                 </ion-item>
                 <ion-item>
-                    {{appointment.value}}
+                    {{appointment.timeStart}}
+                    <p item-right class="blue">
+                        start
+                    </p>
                 </ion-item>
-                <ion-item>
-                    {{appointment.value}}
+                <ion-item *ngIf="appointment.timeEnd">
+                    {{appointment.timeEnd}}
+                    <p item-right class="blue">
+                        end
+                    </p>
                 </ion-item>
+
             </ion-list>
         </ion-list>
-        <!--<ion-list>-->
-            <!--<ion-list-header color="primary">-->
-                <!--<h2>Appointment 1</h2>-->
-                <!--<button ion-button clear item-right large>-->
-                    <!--<ion-icon name="arrow-dropdown" class="white" (click)="toggleActive(0)"></ion-icon>-->
-                <!--</button>-->
-            <!--</ion-list-header>-->
-            <!--<ion-list class="hidden">-->
-                <!--<ion-item>-->
-                    <!--item1-->
-                <!--</ion-item>-->
-                <!--<ion-item>-->
-                    <!--item2-->
-                <!--</ion-item>-->
-                <!--<ion-item>-->
-                    <!--item3-->
-                <!--</ion-item>-->
-            <!--</ion-list>-->
-        <!--</ion-list>-->
-
-        <!--<ion-list>-->
-            <!--<ion-list-header color="primary">-->
-                <!--<h2>Appointment 2</h2>-->
-                <!--<button ion-button clear item-right large>-->
-                    <!--<ion-icon name="arrow-dropdown" class="white" (click)="toggleActive(1)"></ion-icon>-->
-                <!--</button>-->
-            <!--</ion-list-header>-->
-            <!--<ion-list>-->
-                <!--<ion-item>-->
-                    <!--item1-->
-                <!--</ion-item>-->
-                <!--<ion-item>-->
-                    <!--item2-->
-                <!--</ion-item>-->
-                <!--<ion-item>-->
-                    <!--item3-->
-                <!--</ion-item>-->
-            <!--</ion-list>-->
-        <!--</ion-list>-->
-
-        <!--<ion-list>-->
-            <!--<ion-list-header color="primary">-->
-                <!--<h2>Appointment 3</h2>-->
-                <!--<button ion-button clear item-right large>-->
-                    <!--<ion-icon name="arrow-dropdown" class="white" (click)="toggleActive(2)"></ion-icon>-->
-                <!--</button>-->
-            <!--</ion-list-header>-->
-            <!--<ion-list class="hidden">-->
-                <!--<ion-item>-->
-                    <!--item1-->
-                <!--</ion-item>-->
-                <!--<ion-item>-->
-                    <!--item2-->
-                <!--</ion-item>-->
-                <!--<ion-item>-->
-                    <!--item3-->
-                <!--</ion-item>-->
-            <!--</ion-list>-->
-        <!--</ion-list>-->
     </ion-list>
 </ion-content>

@@ -17,6 +17,75 @@
 
 
 <ion-content padding>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi dolore eveniet, impedit ipsa ipsum itaque minus,
-        nostrum odit perspiciatis placeat quisquam recusandae rerum soluta ullam unde? Dolor fuga omnis veniam?</p>
+    <ion-list>
+        <ion-list *ngFor="let accommodation of accommodations; let id = index">
+            <ion-list-header color="primary">
+                <h2>{{accommodation.name}}</h2>
+                <button ion-button clear item-right large>
+                    <ion-icon id="iconEdit{{id}}" name="create" class="hidden white"></ion-icon>
+                </button>
+                <button ion-button clear item-right large>
+                    <ion-icon id="iconArrow{{id}}" name="arrow-dropright" class="white" (click)="toggleActive(id)"></ion-icon>
+                </button>
+            </ion-list-header>
+            <ion-list id="item{{id}}" class="hidden randomclass">
+
+                <ion-item>
+                    {{accommodation.dateArrival}}
+                    <p item-right class="blue">
+                        arrival
+                    </p>
+                </ion-item>
+                <ion-item>
+                    {{accommodation.dateDepartment}}
+                    <p item-right class="blue">
+                        department
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="accommodation.price">
+                    € {{accommodation.price}}
+                    <p item-right class="blue">
+                        price
+                    </p>
+                </ion-item>
+                <ion-item>
+                    {{accommodation.email}}
+                    <p item-right class="blue">
+                        email
+                    </p>
+                </ion-item>
+                <ion-item>
+                    {{accommodation.country}}
+                    <p item-right class="blue">
+                        country
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="accommodation.country">
+                    {{accommodation.city}}
+                    <p item-right class="blue">
+                        city
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="accommodation.street">
+                    {{accommodation.street}} {{accommodation.streetNumber !== undefined ? accommodation.streetNumber: "" }}
+                    <p item-right class="blue">
+                        street
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="accommodation.postcode">
+                    {{accommodation.postcode}}
+                    <p item-right class="blue">
+                        postcode
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="accommodation.phone">
+                    {{accommodation.phoneCountry !== undefined ? accommodation.phoneCountry: "" }} {{accommodation.phone}}
+                    <p item-right class="blue">
+                        phone
+                    </p>
+                </ion-item>
+
+            </ion-list>
+        </ion-list>
+    </ion-list>
 </ion-content>

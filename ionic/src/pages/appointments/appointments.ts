@@ -13,13 +13,13 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
     templateUrl: 'appointments.html',
 })
 export class AppointmentsPage {
-    appointments: Array<{ title: string, value: string }>;
+    appointments: Array<{ title: string, type: string, description: string, country?: string, city?: string, street?: string, streetNumber?: string, postcode?: string, timeStart: any, timeEnd?: any }>;
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
         this.appointments = [
-            {title: 'appointment1', value: 'value1'},
-            {title: 'appointment2', value: 'value2'},
-            {title: 'appointment3', value: 'value3'}
+            {title: 'appointment1', type: 'value1', description: "lorem ipsum dolor sit amed e ugesti a lunga dolci prego e liandi di el cintro de namico mon bellicimo.", timeStart: "2017-08-08 12:00:00"},
+            {title: 'appointment2', type: 'value2', description: "lorem ipsum dolor sit amed e ugesti a lunga dolci prego e liandi di el cintro de namico mon bellicimo.", country: "Nederland", timeStart: "2017-08-08 12:00:00"},
+            {title: 'appointment3', type: 'value3', description: "lorem ipsum dolor sit amed e ugesti a lunga dolci prego e liandi di el cintro de namico mon bellicimo.", timeStart: "2017-08-08 12:00:00"}
 
         ];
     }
@@ -30,24 +30,24 @@ export class AppointmentsPage {
     }
 
     toggleActive(id) {
-        let classes = document.getElementById("icon" + id.toString()).className.split(" ");
-        console.log(classes);
-        for (let key in classes) {
-            if (classes[key] == "ion-md-arrow-dropdown") {
-                document.getElementById("item" + id.toString()).classList.add("hidden");
-                document.getElementById("icon" + id.toString()).classList.remove("ion-md-arrow-dropdown");
-                document.getElementById("icon" + id.toString()).classList.add("ion-md-arrow-dropright");
-                return ('');
-            }
-            for (let i = 0; i < this.appointments.length; i++) {
-                document.getElementById("item" + i.toString()).classList.add("hidden");
-                document.getElementById("icon" + i.toString()).classList.remove("ion-md-arrow-dropdown");
-                document.getElementById("icon" + i.toString()).classList.add("ion-md-arrow-dropright");
-            }
-            document.getElementById("item" + id.toString()).classList.remove("hidden");
-            document.getElementById("icon" + id.toString()).classList.remove("ion-md-arrow-dropright");
-            document.getElementById("icon" + id.toString()).classList.add("ion-md-arrow-dropdown");
+        let isActive = document.getElementById("item" + id.toString()).classList.contains('active');
+        for (let i = 0; i < this.appointments.length; i++) {
+            document.getElementById("item" + i.toString()).classList.remove("active");
+            document.getElementById("item" + i.toString()).classList.add("hidden");
+            document.getElementById("iconArrow" + i.toString()).classList.remove("ion-md-arrow-dropdown");
+            document.getElementById("iconArrow" + i.toString()).classList.add("ion-md-arrow-dropright");
+            document.getElementById("iconEdit" + i.toString()).classList.remove("active");
+            document.getElementById("iconEdit" + i.toString()).classList.add("hidden");
+
         }
-        
+        if (!isActive) {
+            document.getElementById("item" + id.toString()).classList.remove("hidden");
+            document.getElementById("item" + id.toString()).classList.add("active");
+            document.getElementById("iconArrow" + id.toString()).classList.remove("ion-md-arrow-dropright");
+            document.getElementById("iconArrow" + id.toString()).classList.add("ion-md-arrow-dropdown");
+            document.getElementById("iconEdit" + id.toString()).classList.remove("hidden");
+            document.getElementById("iconEdit" + id.toString()).classList.add("active");
+        }
+
     }
 }

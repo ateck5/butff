@@ -19,71 +19,63 @@
 <ion-content padding>
     <ion-list>
         <ion-list-header color="primary">
-            <h2>Firstname Lastname</h2>
+            <h2>{{user.firstname}} {{user.lastname}}</h2>
             <!--TODO: Check edit permission for button-->
             <button ion-button clear item-right large>
                 <ion-icon name="create" class="white"></ion-icon>
             </button>
         </ion-list-header>
         <ion-item>
-            example@email.com
+            {{user.email}}
             <p item-right class="blue">
                 Email
             </p>
         </ion-item>
         <ion-item>
-            (+31) 0612345678
+            {{user.phoneCountry !== undefined ? user.phoneCountry: "" }} {{user.phone}}
             <p item-right class="blue">
                 Phone
             </p>
         </ion-item>
-        <ion-item>
-            Testus
+        <ion-item *ngIf="user.nickname">
+            {{user.nickname}}
             <p item-right class="blue">
                 Nickname
             </p>
         </ion-item>
-        <ion-item>
-            The Netherlands
+        <ion-item *ngIf="user.country">
+            {{user.country}}
             <p item-right class="blue">
                 Country
             </p>
         </ion-item>
-        <ion-item>
-            Breda
+        <ion-item *ngIf="user.city">
+            {{user.city}}
             <p item-right class="blue">
                 City
             </p>
         </ion-item>
-        <ion-item>
-            The Long Street 6
+        <ion-item *ngIf="user.street || user.streetNumber">
+            {{user.street}} {{user.streetNumber !== undefined ? user.streetNumber: "" }}
             <p item-right class="blue">
                 Street
             </p>
         </ion-item>
-        <ion-item>
-            1234 AB
+        <ion-item *ngIf="user.postcode">
+            {{user.postcode}}
             <p item-right class="blue">
                 Postcode
             </p>
         </ion-item>
-        <ion-item>
-            € 5,95
+        <ion-item *ngIf="user.discount">
+            € {{user.discount}}
             <p item-right class="blue">
                 Discount
             </p>
         </ion-item>
-        <ion-item text-wrap>
+        <ion-item text-wrap *ngIf="user.discountDescription">
 
-            €1,00 drink, €4,95 food
-            €1,00 drink, €4,95 food
-            €1,00 drink, €4,95 food
-            €1,00 drink, €4,95 food
-            €1,00 drink, €4,95 food
-            €1,00 drink, €4,95 food
-            €1,00 drink, €4,95 food
-            €1,00 drink, €4,95 food
-            €1,00 drink, €4,95 food
+            {{user.discountDescription}}
 
             <p item-right class="blue">
                 Discount Description

@@ -43,7 +43,7 @@ class UsersTableSeeder extends Seeder
                 'streetNumber' => '123AB',
                 'postcode' => '1234 AA',
                 'phone' => '06' . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9),
-                'phoneCountryCode' => '+' . rand(0, 9) . rand(0, 9),
+                'phoneCountryCode' => rand(0, 9) . rand(0, 9),
                 'discountTotal' => $faker->randomFloat(2, 0, 999),
                 'discountDescription' => $faker->text(191),
                 'year' => $faker->year,
@@ -64,7 +64,7 @@ class UsersTableSeeder extends Seeder
                 'streetNumber' => rand(0, 999) . $faker->randomLetter,
                 'postcode' => $faker->postcode,
                 'phone' => '06' . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9),
-                'phoneCountryCode' => '+' . rand(0, 9) . rand(0, 9),
+                'phoneCountryCode' => rand(0, 9) . rand(0, 9),
                 'discountTotal' => $faker->randomFloat(2, 0, 999),
                 'discountDescription' => $faker->text(191),
                 'year' => $faker->year,
@@ -182,7 +182,7 @@ class AccommodationsTableSeeder extends seeder
                 'streetNumber' => rand(0, 999) . $faker->randomLetter,
                 'postcode' => $faker->postcode,
                 'phone' => '06' . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9),
-                'phoneCountryCode' => '+' . rand(0, 9) . rand(0, 9),
+                'phoneCountryCode' => rand(0, 9) . rand(0, 9),
                 'created_at' => $faker->dateTime
             ]);
         }

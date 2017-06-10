@@ -41,7 +41,21 @@ export class UserDetailsPage {
     private usersUrl = "http://localhost:8000/api/user";
 
     userApi: any;
-    user: { firstname: string, lastname: string, email: string, phone: string, phoneCountry?: string, nickname?: string, country?: string, city?: string, street?: string, streetNumber?: string, postcode?: string, discount?: string, discountDescription?: string };
+    user: {
+        firstname: string,
+        lastname: string,
+        email: string,
+        phone: string,
+        phoneCountry?: string,
+        nickname?: string,
+        country?: string,
+        city?: string,
+        street?: string,
+        streetNumber?: string,
+        postcode?: string,
+        discount?: string,
+        discountDescription?: string
+    };
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private myService: myHTTPService) {
 
@@ -95,12 +109,13 @@ export class UserDetailsPage {
     }
 
     setUser() {
+        // console.log(this.userApi[0]);
         this.user = {
             firstname: this.userApi[0].firstname,
             lastname: this.userApi[0].lastname,
             email: this.userApi[0].email,
             phone: this.userApi[0].phone,
-            phoneCountry: this.userApi[0].phoneCountry,
+            phoneCountry: this.userApi[0].phoneCountrycode,
             nickname: this.userApi[0].nickname,
             country: this.userApi[0].country,
             city: this.userApi[0].city,
@@ -118,6 +133,6 @@ export class UserDetailsPage {
     }
 
     editUsersPage(){
-        this.navCtrl.push(EditUserPage, this.userApi);
+        this.navCtrl.push(EditUserPage, {user: this.userApi});
     }
 }

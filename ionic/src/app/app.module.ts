@@ -1,6 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {ErrorHandler, NgModule} from '@angular/core';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
+import {HttpModule} from "@angular/http";
 
 import {MyApp} from './app.component';
 import {HomePage} from '../pages/home/home';
@@ -13,6 +14,7 @@ import {UserDetailsPage} from "../pages/user-details/user-details";
 import {AccommodationsPage} from "../pages/accommodations/accommodations";
 import {LogoutPage} from "../pages/logout/logout";
 import {LoginPage} from "../pages/login/login";
+import {EditUserPage} from "../pages/edit-user/edit-user";
 
 @NgModule({
     declarations: [
@@ -23,11 +25,13 @@ import {LoginPage} from "../pages/login/login";
         AppointmentsPage,
         AccommodationsPage,
         LoginPage,
-        LogoutPage
+        LogoutPage,
+        EditUserPage
     ],
     imports: [
         BrowserModule,
         IonicModule.forRoot(MyApp),
+        HttpModule
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -38,7 +42,8 @@ import {LoginPage} from "../pages/login/login";
         AppointmentsPage,
         AccommodationsPage,
         LoginPage,
-        LogoutPage
+        LogoutPage,
+        EditUserPage
     ],
     providers: [
         StatusBar,

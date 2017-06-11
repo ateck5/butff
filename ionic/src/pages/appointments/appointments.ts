@@ -51,7 +51,6 @@ export class AppointmentsPage {
 
         this.http.get(url)
             .subscribe(res => {
-                // console.log('res', res.json());
                 this.currentUser = res.json();
                 this.getAppointmentsUser();
             }, (err) => {
@@ -61,7 +60,6 @@ export class AppointmentsPage {
     }
 
     private getAppointmentsUser() {
-        console.log(this.currentUser);
         //TODO: change url to live url
         let url = "http://localhost:8000/api/appointmentUser/" + this.currentUser.id;
         this.http.get(url)
@@ -101,7 +99,6 @@ export class AppointmentsPage {
                     console.log('err', err);
                     console.log(err._body);
                 });
-            console.log(this.appointmentsUser[appointmentUser]);
         }
         this.ready = true;
     }

@@ -74,9 +74,8 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-//        var_dump($request->get('firstname'));
         $data = $request->all();
-//        var_dump($data);
+        //TODO: add updated timestamp
 
         $user->firstname = $data['firstname'];
         $user->lastname = $data['lastname'];

@@ -22,22 +22,22 @@
             <ion-list-header color="primary">
                 <h2>{{accommodation.name}}</h2>
                 <button ion-button clear item-right large>
-                    <ion-icon id="iconEdit{{id}}" name="create" class="hidden white"></ion-icon>
+                    <ion-icon id="iconEdit{{accommodation.id}}" name="create" class="hidden white"></ion-icon>
                 </button>
                 <button ion-button clear item-right large>
-                    <ion-icon id="iconArrow{{id}}" name="arrow-dropright" class="white" (click)="toggleActive(id)"></ion-icon>
+                    <ion-icon id="iconArrow{{accommodation.id}}" name="arrow-dropright" class="white" (click)="toggleActive(accommodation.id)"></ion-icon>
                 </button>
             </ion-list-header>
-            <ion-list id="item{{id}}" class="hidden randomclass">
+            <ion-list id="item{{accommodation.id}}" class="hidden randomclass">
 
                 <ion-item>
-                    {{accommodation.dateArrival}}
+                    {{accommodationsUser[id].dateArrival}}
                     <p item-right class="blue">
                         arrival
                     </p>
                 </ion-item>
                 <ion-item>
-                    {{accommodation.dateDepartment}}
+                    {{accommodationsUser[id].dateDepartment}}
                     <p item-right class="blue">
                         department
                     </p>

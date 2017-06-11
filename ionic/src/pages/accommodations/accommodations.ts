@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, Injectable} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
-
+import {Http} from "@angular/http";
 /**
  * Generated class for the AccommodationsPage page.
  *
@@ -8,54 +8,103 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
  * on Ionic pages and navigation.
  */
 @IonicPage()
+@Injectable()
+class myHTTPService {
+    constructor(private http: Http) {
+    }
+
+    //TODO: change url to live url
+    //TODO: user id is still static
+    configEndPoint: string = 'http://localhost:8000/api/user/1';
+
+    getConfig() {
+
+        return this.http
+            .get(this.configEndPoint)
+            .map(res => res.json());
+    }
+}
+
 @Component({
     selector: 'page-accommodations',
     templateUrl: 'accommodations.html',
+    providers: [myHTTPService],
 })
 export class AccommodationsPage {
 
-    accommodations: Array<{ name: string, email: string, country: string, city: string, street: string, streetNumber?: string, postcode: string, phone: string, phoneCountry?: string, price?: string, dateArrival: any, dateDepartment: any }>;
+    accommodations: Array<{ id: number, name: string, email: string, country: string, city: string, street: string, streetNumber?: string, postcode: string, phone: string, phoneCountry?: string, price?: string, dateArrival: any, dateDepartment: any }>;
+    currentUser;
+    accommodationsUser;
+    ready: boolean = false;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams) {
-        this.accommodations = [
-            {
-                name: "Hotel Good View",
-                email: "ex@am.ple",
-                country: "The Netherlands",
-                city: "Breda",
-                street: "StreetStr",
-                postcode: "1234AB",
-                phone: "0612345678",
-                dateArrival: "2017-08-08 12:00:00",
-                dateDepartment: "2017-08-08 12:00:00"
-            },
-            {
-                name: "Hotel Average View",
-                email: "ex@am.ple",
-                country: "The Netherlands",
-                city: "Breda",
-                street: "StreetStr",
-                streetNumber: "6",
-                postcode: "1234AB",
-                phone: "0612345678",
-                phoneCountry: "+31",
-                price: "999,00",
-                dateArrival: "2017-08-08 12:00:00",
-                dateDepartment: "2017-08-08 12:00:00",
-            },
-            {
-                name: "Hotel Bad View",
-                email: "ex@am.ple",
-                country: "The Netherlands",
-                city: "Breda",
-                street: "StreetStr",
-                postcode: "1234AB",
-                phone: "0612345678",
-                dateArrival: "2017-08-08 12:00:00",
-                dateDepartment: "2017-08-08 12:00:00"
-            }
+    constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private myService: myHTTPService) {
+        this.accommodations = [];
+        this.getCurrentUser();
+    }
 
-        ];
+    private getCurrentUser() {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        //TODO: change url to live url
+        //TODO: user id is still static
+        let url = "http://localhost:8000/api/user/3";
+
+        this.http.get(url)
+            .subscribe(res => {
+                this.currentUser = res.json();
+                this.getAccommodationsUser();
+            }, (err) => {
+                console.log('err', err);
+                console.log(err._body);
+            });
+    }
+
+    private getAccommodationsUser() {
+        //TODO: change url to live url
+        let url = "http://localhost:8000/api/accommodationUser/" + this.currentUser.id;
+        this.http.get(url)
+            .subscribe(res => {
+                this.accommodationsUser = res.json();
+
+                console.log(this.accommodationsUser);
+                this.getAccommodations();
+            }, (err) => {
+                console.log('err', err);
+                console.log(err._body);
+            });
+    }
+
+    private getAccommodations() {
+        //TODO: handle this in one request
+        for (let accommodationUser in this.accommodationsUser) {
+            //TODO: change url to live url
+            let url = "http://localhost:8000/api/accommodation/" + this.accommodationsUser[accommodationUser].accommodation_id;
+            this.http.get(url)
+                .subscribe(res => {
+                    let result = res.json();
+                    this.accommodations.push({
+                        id: result.id,
+                        name: result.name,
+                        email: result.email,
+                        country: result.country,
+                        city: result.city,
+                        street: result.street,
+                        streetNumber: result.streetNumber,
+                        postcode: result.postcode,
+                        phone: result.phone,
+                        phoneCountry: result.phoneCountry,
+                        price: result.price,
+                        dateArrival: result.dateArrival,
+                        dateDepartment: result.dateDepartment
+                    });
+                    console.log(res.json());
+                }, (err) => {
+                    console.log('err', err);
+                    console.log(err._body);
+                });
+        }
+        this.ready = true;
     }
 
     ionViewDidLoad() {
@@ -63,24 +112,24 @@ export class AccommodationsPage {
     }
 
     toggleActive(id) {
-        let isActive = document.getElementById("item" + id.toString()).classList.contains('active');
-        for (let i = 0; i < this.accommodations.length; i++) {
-            document.getElementById("item" + i.toString()).classList.remove("active");
-            document.getElementById("item" + i.toString()).classList.add("hidden");
-            document.getElementById("iconArrow" + i.toString()).classList.remove("ion-md-arrow-dropdown");
-            document.getElementById("iconArrow" + i.toString()).classList.add("ion-md-arrow-dropright");
-            document.getElementById("iconEdit" + i.toString()).classList.remove("active");
-            document.getElementById("iconEdit" + i.toString()).classList.add("hidden");
-
+        if (this.ready) {
+            let isActive = document.getElementById("item" + id.toString()).classList.contains('active');
+            for (let id in this.accommodations) {
+                document.getElementById("item" + this.accommodations[id].id.toString()).classList.remove("active");
+                document.getElementById("item" + this.accommodations[id].id.toString()).classList.add("hidden");
+                document.getElementById("iconArrow" + this.accommodations[id].id.toString()).classList.remove("ion-md-arrow-dropdown");
+                document.getElementById("iconArrow" + this.accommodations[id].id.toString()).classList.add("ion-md-arrow-dropright");
+                document.getElementById("iconEdit" + this.accommodations[id].id.toString()).classList.remove("active");
+                document.getElementById("iconEdit" + this.accommodations[id].id.toString()).classList.add("hidden");
+            }
+            if (!isActive) {
+                document.getElementById("item" + id.toString()).classList.remove("hidden");
+                document.getElementById("item" + id.toString()).classList.add("active");
+                document.getElementById("iconArrow" + id.toString()).classList.remove("ion-md-arrow-dropright");
+                document.getElementById("iconArrow" + id.toString()).classList.add("ion-md-arrow-dropdown");
+                document.getElementById("iconEdit" + id.toString()).classList.remove("hidden");
+                document.getElementById("iconEdit" + id.toString()).classList.add("active");
+            }
         }
-        if (!isActive) {
-            document.getElementById("item" + id.toString()).classList.remove("hidden");
-            document.getElementById("item" + id.toString()).classList.add("active");
-            document.getElementById("iconArrow" + id.toString()).classList.remove("ion-md-arrow-dropright");
-            document.getElementById("iconArrow" + id.toString()).classList.add("ion-md-arrow-dropdown");
-            document.getElementById("iconEdit" + id.toString()).classList.remove("hidden");
-            document.getElementById("iconEdit" + id.toString()).classList.add("active");
-        }
-
     }
 }

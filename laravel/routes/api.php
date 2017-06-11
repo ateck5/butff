@@ -21,3 +21,5 @@ use Illuminate\Http\Request;
 Route::resource('/user', "UserController");
 Route::resource('/appointment', "AppointmentController");
 Route::resource('/appointmentUser', "AppointmentUserController");
+Route::resource('/accommodation', "AccommodationController");
+Route::resource('/accommodationUser', "AccommodationUserController");

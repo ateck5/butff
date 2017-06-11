@@ -15,6 +15,7 @@ import {AccommodationsPage} from "../pages/accommodations/accommodations";
 import {LogoutPage} from "../pages/logout/logout";
 import {LoginPage} from "../pages/login/login";
 import {EditUserPage} from "../pages/edit-user/edit-user";
+import {EditAppointmentsPage} from "../pages/edit-appointment/edit-appointment";
 
 @NgModule({
     declarations: [
@@ -26,7 +27,8 @@ import {EditUserPage} from "../pages/edit-user/edit-user";
         AccommodationsPage,
         LoginPage,
         LogoutPage,
-        EditUserPage
+        EditUserPage,
+        EditAppointmentsPage
     ],
     imports: [
         BrowserModule,
@@ -43,7 +45,8 @@ import {EditUserPage} from "../pages/edit-user/edit-user";
         AccommodationsPage,
         LoginPage,
         LogoutPage,
-        EditUserPage
+        EditUserPage,
+        EditAppointmentsPage
     ],
     providers: [
         StatusBar,

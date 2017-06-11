@@ -7,15 +7,11 @@
 <ion-header>
 
     <ion-navbar>
-        <button ion-button menuToggle>
-            <ion-icon name="menu"></ion-icon>
-        </button>
         <ion-title>Edit Personal Details</ion-title>
     </ion-navbar>
 
 </ion-header>
 
-postcode?: string, discount?: string, discountDescription?: string
 <ion-content padding>
     <form [formGroup]="userForm" (ngSubmit)="logForm()">
         <ion-item>

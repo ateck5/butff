@@ -21,6 +21,8 @@ class myHTTPService {
     constructor(private http: Http) {
     }
 
+    //TODO: change url to live url
+    //TODO: user id is still static
     configEndPoint: string = 'http://localhost:8000/api/user/1';
 
     getConfig() {
@@ -37,7 +39,7 @@ class myHTTPService {
     providers: [myHTTPService],
 })
 export class UserDetailsPage {
-    //TODO: change localhost to actual domain
+    //TODO: change url to live url
     private usersUrl = "http://localhost:8000/api/user";
 
     userApi: any;
@@ -74,7 +76,9 @@ export class UserDetailsPage {
             discount: "",
             discountDescription: ""
         };
+        //TODO: make get request similar to edit-user and appointments using this.http.get
         this.myService.getConfig().subscribe(val => {
+            console.log(val);
             this.userApi = val;
             this.setUser();
 
@@ -89,6 +93,7 @@ export class UserDetailsPage {
     }
 
     private extractData(res: Response) {
+        console.log('succes');
         let body = res.json();
         return body.data || {};
         // return body;
@@ -109,21 +114,20 @@ export class UserDetailsPage {
     }
 
     setUser() {
-        // console.log(this.userApi[0]);
         this.user = {
-            firstname: this.userApi[0].firstname,
-            lastname: this.userApi[0].lastname,
-            email: this.userApi[0].email,
-            phone: this.userApi[0].phone,
-            phoneCountry: this.userApi[0].phoneCountrycode,
-            nickname: this.userApi[0].nickname,
-            country: this.userApi[0].country,
-            city: this.userApi[0].city,
-            street: this.userApi[0].street,
-            streetNumber: this.userApi[0].streetNumber,
-            postcode: this.userApi[0].postcode,
-            discount: this.userApi[0].discount,
-            discountDescription: this.userApi[0].discountDescription
+            firstname: this.userApi.firstname,
+            lastname: this.userApi.lastname,
+            email: this.userApi.email,
+            phone: this.userApi.phone,
+            phoneCountry: this.userApi.phoneCountrycode,
+            nickname: this.userApi.nickname,
+            country: this.userApi.country,
+            city: this.userApi.city,
+            street: this.userApi.street,
+            streetNumber: this.userApi.streetNumber,
+            postcode: this.userApi.postcode,
+            discount: this.userApi.discount,
+            discountDescription: this.userApi.discountDescription
         }
     }
 

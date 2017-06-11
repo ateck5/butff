@@ -19,6 +19,8 @@ class myHTTPService {
     constructor(private http: Http) {
     }
 
+    //TODO: change url to live url
+    //TODO: user id is still static
     configEndPoint: string = 'http://localhost:8000/api/user/1';
 
     getConfig() {
@@ -41,7 +43,7 @@ export class EditUserPage {
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private http: Http, private myService: myHTTPService) {
         this.navParams.get("user");
-        this.user = this.navParams.data.user[0];
+        this.user = this.navParams.data.user;
 
         //TODO: validating, ex: length
         this.userForm = this.formBuilder.group({
@@ -58,7 +60,7 @@ export class EditUserPage {
             postcode: [this.user.postcode]
         });
 
-        console.log('userform',this.userForm);
+        console.log('userform', this.userForm);
     }
 
     ionViewDidLoad() {
@@ -66,10 +68,8 @@ export class EditUserPage {
     }
 
 
-
     logForm() {
         let headers = new Headers();
-        // headers.append("Accept", 'application/json');
         headers.append('Content-Type', 'application/json');
 
         this.user.firstname = this.userForm.value.firstname;
@@ -84,7 +84,8 @@ export class EditUserPage {
         this.user.streetNumber = this.userForm.value.streetNumber;
         this.user.postcode = this.userForm.value.postcode;
 
-
+        //TODO: change url to live url
+        //TODO: user id is still static
         let url = "http://localhost:8000/api/user/1";
 
         this.http.put(url, JSON.stringify(this.user), {headers: headers})

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Appointment;
 use Illuminate\Http\Request;
 
-use App\User as User;
-
-class UserController extends Controller
+class AppointmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users[] = User::all();
+        $appointments[] = Appointments::all();
 
-        return response()->json($users, 200);
+        return response()->json($appointments, 200);
     }
 
     /**
@@ -33,9 +32,10 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
         //
     }
@@ -43,20 +43,20 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $appointment = Appointment::findOrFail($id);
 
-        return response()->json($user, 200);
+        return response()->json($appointment, 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -67,37 +67,19 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-
-//        var_dump($request->get('firstname'));
-        $data = $request->all();
-//        var_dump($data);
-
-        $user->firstname = $data['firstname'];
-        $user->lastname = $data['lastname'];
-        $user->email = $data['email'];
-        $user->phone = $data['phone'];
-        $user->phoneCountryCode = $data['phoneCountrycode'];
-        $user->nickname = $data['nickname'];
-        $user->country = $data['country'];
-        $user->city = $data['city'];
-        $user->street = $data['street'];
-        $user->streetNumber = $data['streetNumber'];
-        $user->postcode = $data['postcode'];
-        $user->update();
-
-        return response()->json($user, 200);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

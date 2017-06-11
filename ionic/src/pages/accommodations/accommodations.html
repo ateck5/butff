@@ -18,11 +18,11 @@
 
 <ion-content padding>
     <ion-list>
-        <ion-list *ngFor="let accommodation of accommodations; let id = index">
+        <ion-list *ngFor="let accommodation of accommodations;">
             <ion-list-header color="primary">
                 <h2>{{accommodation.name}}</h2>
                 <button ion-button clear item-right large>
-                    <ion-icon id="iconEdit{{accommodation.id}}" name="create" class="hidden white"></ion-icon>
+                    <ion-icon id="iconEdit{{accommodation.id}}" name="create" class="hidden white" (click)="editAccommodationUserPage(accommodation)"></ion-icon>
                 </button>
                 <button ion-button clear item-right large>
                     <ion-icon id="iconArrow{{accommodation.id}}" name="arrow-dropright" class="white" (click)="toggleActive(accommodation.id)"></ion-icon>

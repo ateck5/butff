@@ -1,6 +1,7 @@
 import {Component, Injectable} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Http} from "@angular/http";
+import {EditAccommodationUserPage} from "../edit-accommodation-user/edit-accommodation-user";
 /**
  * Generated class for the AccommodationsPage page.
  *
@@ -68,7 +69,6 @@ export class AccommodationsPage {
             .subscribe(res => {
                 this.accommodationsUser = res.json();
 
-                console.log(this.accommodationsUser);
                 this.getAccommodations();
             }, (err) => {
                 console.log('err', err);
@@ -80,7 +80,7 @@ export class AccommodationsPage {
         //TODO: handle this in one request
         for (let accommodationUser in this.accommodationsUser) {
             //TODO: change url to live url
-            let url = "http://localhost:8000/api/accommodation/" + this.accommodationsUser[accommodationUser].accommodation_id;
+            let url = "http://localhost:8000/api/accommodation/" + this.accommodationsUser[accommodationUser].id;
             this.http.get(url)
                 .subscribe(res => {
                     let result = res.json();
@@ -133,5 +133,9 @@ export class AccommodationsPage {
                 document.getElementById("iconEdit" + id.toString()).classList.add("active");
             }
         }
+    }
+
+    editAccommodationUserPage(accommodationUser) {
+        this.navCtrl.push(EditAccommodationUserPage, {accommodationUser: accommodationUser});
     }
 }

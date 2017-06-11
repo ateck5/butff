@@ -48,9 +48,7 @@ class AccommodationUserController extends Controller
      */
     public function show($id)
     {
-        $accommodationsUser = AccommodationsUsers::where('user_id', $id)
-            ->orderBy('id')
-            ->get();
+        $accommodationsUser = AccommodationsUsers::where('user_id', $id)->get();
 
         return response()->json($accommodationsUser, 200);
     }
@@ -75,7 +73,18 @@ class AccommodationUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $accommodationUser = AccommodationsUsers::findOrFail($id);
+
+        $data = $request->all();
+        //TODO: add updated timestamp
+
+        $accommodationUser->price = number_format(floatval($data['price']), 2, '.', '');
+        $accommodationUser->dateArrival = $data['dateArrival'];
+        $accommodationUser->dateDepartment = $data['dateDepartment'];
+
+        $accommodationUser->update();
+
+        return response()->json($accommodationUser, 200);
     }
 
     /**

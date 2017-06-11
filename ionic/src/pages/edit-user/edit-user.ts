@@ -38,7 +38,6 @@ class myHTTPService {
 
 export class EditUserPage {
     private userForm: FormGroup;
-
     user;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private http: Http, private myService: myHTTPService) {

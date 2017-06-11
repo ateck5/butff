@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Appointment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class AppointmentController extends Controller
 {
@@ -73,7 +74,24 @@ class AppointmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $appointment = Appointment::findOrFail($id);
+
+        $data = $request->all();
+        //TODO: add updated timestamp
+
+        $appointment->name = $data['name'];
+        $appointment->type = $data['type'];
+        $appointment->description = $data['description'];
+        $appointment->country = $data['country'];
+        $appointment->city = $data['city'];
+        $appointment->street = $data['street'];
+        $appointment->streetNumber = $data['streetNumber'];
+        $appointment->postcode = $data['postcode'];
+        $appointment->timeStart = $data['timeStart'];
+        $appointment->timeEnd = $data['timeEnd'];
+        $appointment->update();
+
+        return response()->json($appointment, 200);
     }
 
     /**

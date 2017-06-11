@@ -31,13 +31,13 @@
             <ion-list id="item{{accommodation.id}}" class="hidden randomclass">
 
                 <ion-item>
-                    {{accommodationsUser[id].dateArrival}}
+                    {{accommodation.dateArrival}}
                     <p item-right class="blue">
                         arrival
                     </p>
                 </ion-item>
                 <ion-item>
-                    {{accommodationsUser[id].dateDepartment}}
+                    {{accommodation.dateDepartment}}
                     <p item-right class="blue">
                         department
                     </p>
@@ -79,7 +79,7 @@
                     </p>
                 </ion-item>
                 <ion-item *ngIf="accommodation.phone">
-                    {{accommodation.phoneCountry !== undefined ? accommodation.phoneCountry: "" }} {{accommodation.phone}}
+                    {{accommodation.phoneCountry !== undefined ? "+ " + accommodation.phoneCountry: "" }} {{accommodation.phone}}
                     <p item-right class="blue">
                         phone
                     </p>

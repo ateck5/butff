@@ -43,6 +43,7 @@ export class AccommodationsPage {
     }
 
     private getCurrentUser() {
+        //TODO: change getCurrentUser to fetch data from localstorage
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
@@ -93,11 +94,12 @@ export class AccommodationsPage {
                         streetNumber: result.streetNumber,
                         postcode: result.postcode,
                         phone: result.phone,
-                        phoneCountry: result.phoneCountry,
-                        price: result.price,
-                        dateArrival: result.dateArrival,
-                        dateDepartment: result.dateDepartment
+                        phoneCountry: result.phoneCountrycode,
+                        price: this.accommodationsUser[accommodationUser].price,
+                        dateArrival: this.accommodationsUser[accommodationUser].dateArrival,
+                        dateDepartment: this.accommodationsUser[accommodationUser].dateDepartment
                     });
+                    console.log(this.accommodations);
                     console.log(res.json());
                 }, (err) => {
                     console.log('err', err);

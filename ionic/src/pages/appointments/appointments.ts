@@ -1,7 +1,6 @@
 import {Component, Injectable} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Http} from "@angular/http";
-import {EditAppointmentsPage} from "../edit-appointment/edit-appointment";
 /**
  * Generated class for the AppointmentsPage page.
  *
@@ -130,10 +129,5 @@ export class AppointmentsPage {
             }
         }
 
-
-    }
-
-    editAppointmentPage(appointment) {
-        this.navCtrl.push(EditAppointmentsPage, {appointment: appointment});
     }
 }

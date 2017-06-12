@@ -23,8 +23,8 @@ class myHTTPService {
     //TODO: user id is still static
     configEndPoint: string = 'http://localhost:8000/api/user/1';
 
+    //get http up and running
     getConfig() {
-
         return this.http
             .get(this.configEndPoint)
             .map(res => res.json());

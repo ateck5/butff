@@ -18,8 +18,8 @@ class myHTTPService {
     //TODO: user id is still static
     configEndPoint: string = 'http://localhost:8000/api/user/1';
 
+    //get http up and running
     getConfig() {
-
         return this.http
             .get(this.configEndPoint)
             .map(res => res.json());
@@ -43,8 +43,6 @@ export class AppointmentsPage {
     }
 
     private getCurrentUser() {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
 
         //TODO: change url to live url
         //TODO: user id is still static
@@ -77,6 +75,7 @@ export class AppointmentsPage {
 
     private getAppointments() {
         //TODO: handle this in one request
+        //get all accommodations from the user, one by one
         for (let appointmentUser in this.appointmentsUser) {
             //TODO: change url to live url
             let url = "http://localhost:8000/api/appointment/" + this.appointmentsUser[appointmentUser].appointment_id;
@@ -109,7 +108,9 @@ export class AppointmentsPage {
     }
 
     toggleActive(id) {
+        //carousel function
         if (this.ready) {
+            //close all carousel items
             let isActive = document.getElementById("item" + id.toString()).classList.contains('active');
             for (let id in this.appointments) {
                 document.getElementById("item" + this.appointments[id].id.toString()).classList.remove("active");
@@ -121,6 +122,7 @@ export class AppointmentsPage {
 
             }
             if (!isActive) {
+                //open active carousel item
                 document.getElementById("item" + id.toString()).classList.remove("hidden");
                 document.getElementById("item" + id.toString()).classList.add("active");
                 document.getElementById("iconArrow" + id.toString()).classList.remove("ion-md-arrow-dropright");

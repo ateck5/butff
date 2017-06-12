@@ -18,8 +18,8 @@ class myHTTPService {
     //TODO: user id is still static
     configEndPoint: string = 'http://localhost:8000/api/user/1';
 
+    //get http up and running
     getConfig() {
-
         return this.http
             .get(this.configEndPoint)
             .map(res => res.json());
@@ -45,8 +45,6 @@ export class AccommodationsPage {
 
     private getCurrentUser() {
         //TODO: change getCurrentUser to fetch data from localstorage
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
 
         //TODO: change url to live url
         //TODO: user id is still static
@@ -68,7 +66,6 @@ export class AccommodationsPage {
         this.http.get(url)
             .subscribe(res => {
                 this.accommodationsUser = res.json();
-
                 this.getAccommodations();
             }, (err) => {
                 console.log('err', err);
@@ -78,12 +75,14 @@ export class AccommodationsPage {
 
     private getAccommodations() {
         //TODO: handle this in one request
+        //get all accommodations from the user, one by one
         for (let accommodationUser in this.accommodationsUser) {
             //TODO: change url to live url
             let url = "http://localhost:8000/api/accommodation/" + this.accommodationsUser[accommodationUser].id;
             this.http.get(url)
                 .subscribe(res => {
                     let result = res.json();
+                    //price, datearrival and datedepartment are from accommodationsuser
                     this.accommodations.push({
                         id: result.id,
                         name: result.name,
@@ -114,7 +113,9 @@ export class AccommodationsPage {
     }
 
     toggleActive(id) {
+        //carousel function
         if (this.ready) {
+            //close all carousel items
             let isActive = document.getElementById("item" + id.toString()).classList.contains('active');
             for (let id in this.accommodations) {
                 document.getElementById("item" + this.accommodations[id].id.toString()).classList.remove("active");
@@ -125,6 +126,7 @@ export class AccommodationsPage {
                 document.getElementById("iconEdit" + this.accommodations[id].id.toString()).classList.add("hidden");
             }
             if (!isActive) {
+                //open active carousel item
                 document.getElementById("item" + id.toString()).classList.remove("hidden");
                 document.getElementById("item" + id.toString()).classList.add("active");
                 document.getElementById("iconArrow" + id.toString()).classList.remove("ion-md-arrow-dropright");

@@ -7,6 +7,8 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
+  //TODO: make nickname generic based on user session
+  user = { username : "Admin"};
   constructor(public navCtrl: NavController) {
 
   }

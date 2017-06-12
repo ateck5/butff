@@ -19,8 +19,8 @@ class myHTTPService {
     //TODO: user id is still static
     configEndPoint: string = 'http://localhost:8000/api/user/1';
 
+    //get http up and running
     getConfig() {
-
         return this.http
             .get(this.configEndPoint)
             .map(res => res.json());
@@ -45,6 +45,7 @@ export class EditAccommodationUserPage {
             dateDepartment:this.navParams.data.accommodationUser.dateDepartment
         };
 
+        //change database datetime format to form datetime format
         let dateArrival = this.accommodationUser.dateArrival.replace(" ", "T") + "Z";
         let dateDepartment = this.accommodationUser.dateDepartment.replace(" ", "T") + "Z";
 
@@ -67,6 +68,7 @@ export class EditAccommodationUserPage {
 
 
         this.accommodationUser.price = this.accommodationUserForm.value.price;
+        //change form datetime format to database datetime format
         this.accommodationUser.dateArrival = this.accommodationUserForm.value.dateArrival.replace("T", " ").replace("Z", "");
         this.accommodationUser.dateDepartment = this.accommodationUserForm.value.dateDepartment.replace("T", " ").replace("Z", "");
 

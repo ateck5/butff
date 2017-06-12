@@ -19,8 +19,8 @@ class myHTTPService {
     //TODO: user id is still static
     configEndPoint: string = 'http://localhost:8000/api/user/1';
 
+    //get http up and running
     getConfig() {
-
         return this.http
             .get(this.configEndPoint)
             .map(res => res.json());
@@ -39,6 +39,7 @@ export class EditAppointmentPage {
         this.navParams.get("appointment");
         this.appointment = this.navParams.data.appointment;
 
+        //change database datetime format to form datetime format
         let dateStart = this.appointment.timeStart.replace(" ", "T") + "Z";
         let dateEnd = this.appointment.timeEnd.replace(" ", "T") + "Z";
 
@@ -76,6 +77,7 @@ export class EditAppointmentPage {
         this.appointment.street = this.appointmentForm.value.street;
         this.appointment.streetNumber = this.appointmentForm.value.streetNumber;
         this.appointment.postcode = this.appointmentForm.value.postcode;
+        //change form datetime format to database datetime format
         this.appointment.timeStart = this.appointmentForm.value.timeStart.replace("T", " ").replace("Z", "");
         this.appointment.timeEnd = this.appointmentForm.value.timeEnd.replace("T", " ").replace("Z", "");
 

@@ -78,6 +78,7 @@ class AccommodationUserController extends Controller
         $data = $request->all();
         //TODO: add updated timestamp
 
+        //TODO: fix datetime format
         $accommodationUser->price = number_format(floatval($data['price']), 2, '.', '');
         $accommodationUser->dateArrival = $data['dateArrival'];
         $accommodationUser->dateDepartment = $data['dateDepartment'];

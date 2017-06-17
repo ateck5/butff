@@ -2,6 +2,7 @@ import {Component, Injectable} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Http} from "@angular/http";
 import {EditAccommodationUserPage} from "../edit-accommodation-user/edit-accommodation-user";
+import * as Globals from "../../globals/globals";
 /**
  * Generated class for the AccommodationsPage page.
  *
@@ -14,9 +15,11 @@ class myHTTPService {
     constructor(private http: Http) {
     }
 
-    //TODO: change url to live url
     //TODO: user id is still static
-    configEndPoint: string = 'http://localhost:8000/api/user/1';
+    currentUser: any = {id: 1};
+
+    configEndPoint: string = Globals.globals.url + "user/" + this.currentUser.id;
+    // configEndPoint: string = 'http://localhost:8000/api/user/1';
 
     //get http up and running
     getConfig() {
@@ -45,10 +48,12 @@ export class AccommodationsPage {
 
     private getCurrentUser() {
         //TODO: change getCurrentUser to fetch data from localstorage
+        this.currentUser = {
+            id: 3
+        };
 
-        //TODO: change url to live url
-        //TODO: user id is still static
-        let url = "http://localhost:8000/api/user/3";
+        let url = Globals.globals.url + "user/" + this.currentUser.id;
+        // let url = "http://localhost:8000/api/user/3";
 
         this.http.get(url)
             .subscribe(res => {
@@ -61,8 +66,8 @@ export class AccommodationsPage {
     }
 
     private getAccommodationsUser() {
-        //TODO: change url to live url
-        let url = "http://localhost:8000/api/accommodationUser/" + this.currentUser.id;
+        let url = Globals.globals.url + "accommodationUser/" + this.currentUser.id;
+        // let url = "http://localhost:8000/api/accommodationUser/" + this.currentUser.id;
         this.http.get(url)
             .subscribe(res => {
                 this.accommodationsUser = res.json();
@@ -77,8 +82,8 @@ export class AccommodationsPage {
         //TODO: handle this in one request
         //get all accommodations from the user, one by one
         for (let accommodationUser in this.accommodationsUser) {
-            //TODO: change url to live url
-            let url = "http://localhost:8000/api/accommodation/" + this.accommodationsUser[accommodationUser].id;
+            let url = Globals.globals.url + "accommodation/" + this.accommodationsUser[accommodationUser].id;
+            // let url = "http://localhost:8000/api/accommodation/" + this.accommodationsUser[accommodationUser].id;
             this.http.get(url)
                 .subscribe(res => {
                     let result = res.json();

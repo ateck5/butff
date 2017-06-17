@@ -2,6 +2,7 @@ import {Component, Injectable} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Http, Headers} from "@angular/http";
+import * as Globals from "../../globals/globals"
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -19,9 +20,12 @@ class myHTTPService {
     constructor(private http: Http) {
     }
 
-    //TODO: change url to live url
     //TODO: user id is still static
-    configEndPoint: string = 'http://localhost:8000/api/user/1';
+    currentUser: any = {id: 1};
+
+    configEndPoint: string = Globals.globals.url + "user/" + this.currentUser.id;
+    // configEndPoint: string = 'http://localhost:8000/api/user/1';
+
 
     //get http up and running
     getConfig() {
@@ -38,6 +42,7 @@ class myHTTPService {
 
 export class EditUserPage {
     private userForm: FormGroup;
+    currentUser;
     user;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private http: Http, private myService: myHTTPService) {
@@ -83,9 +88,10 @@ export class EditUserPage {
         this.user.streetNumber = this.userForm.value.streetNumber;
         this.user.postcode = this.userForm.value.postcode;
 
-        //TODO: change url to live url
         //TODO: user id is still static
-        let url = "http://localhost:8000/api/user/1";
+        this.currentUser = {id: 1};
+        let url = Globals.globals.url + "user/" + this.currentUser.id;
+        // let url = "http://localhost:8000/api/user/1";
 
         this.http.put(url, JSON.stringify(this.user), {headers: headers})
             .subscribe(res => {

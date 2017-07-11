@@ -1,11 +1,10 @@
 import {Component, Injectable} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {Http, Response} from "@angular/http";
+import {Http} from "@angular/http";
 import {EditUserPage} from "../edit-user/edit-user";
-import {LoginPage} from "../login/login";
-import * as Globals from "../../globals/globals"
+import {LoginPage} from "../../auth/login/login";
+import * as Globals from "../../../globals/globals"
 
-import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/Rx';
@@ -64,63 +63,7 @@ export class UserDetailsPage {
         this.user.postcode = userApi.postcode;
         this.user.discount = userApi.discount;
         this.user.discountDescription = userApi.discountDescription;
-
-        // this.myService.getConfig().subscribe(val => {
-        //     console.log(val);
-        //     this.userApi = val;
-        //     this.setUser();
-        //
-        // });
-        // this.myService.getConfig();
     }
-
-    // getData() {
-        // let url = Globals.globals.url + "user/" + this.user.id;
-
-
-        // return this.http.get(this.usersUrl)
-        //     .map(this.extractData)
-        //     .catch(this.handleError);
-    // }
-
-    // private extractData(res: Response) {
-    //     console.log('succes');
-    //     let body = res.json();
-    //     return body.data || {};
-    //     // return body;
-    // }
-
-    // private handleError(error: Response | any) {
-    //     // In a real world app, you might use a remote logging infrastructure
-    //     let errMsg: string;
-    //     if (error instanceof Response) {
-    //         const body = error.json() || '';
-    //         const err = body.error || JSON.stringify(body);
-    //         errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-    //     } else {
-    //         errMsg = error.message ? error.message : error.toString();
-    //     }
-    //     console.error(errMsg);
-    //     return Observable.throw(errMsg);
-    // }
-
-    // setUser() {
-    //     this.user = {
-    //         firstname: this.userApi.firstname,
-    //         lastname: this.userApi.lastname,
-    //         email: this.userApi.email,
-    //         phone: this.userApi.phone,
-    //         phoneCountry: this.userApi.phoneCountrycode,
-    //         nickname: this.userApi.nickname,
-    //         country: this.userApi.country,
-    //         city: this.userApi.city,
-    //         street: this.userApi.street,
-    //         streetNumber: this.userApi.streetNumber,
-    //         postcode: this.userApi.postcode,
-    //         discount: this.userApi.discount,
-    //         discountDescription: this.userApi.discountDescription
-    //     }
-    // }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad UserDetailsPage');

@@ -2,8 +2,8 @@ import {Component, Injectable} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Http, Headers} from "@angular/http";
-import * as Globals from "../../globals/globals"
-import {LoginPage} from "../login/login";
+import * as Globals from "../../../globals/globals"
+import {LoginPage} from "../../auth/login/login";
 
 /**
  * Generated class for the EditAccommodationUserPage page.

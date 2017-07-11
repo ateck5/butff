@@ -1,7 +1,7 @@
 import {Component, Injectable} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {HomePage} from "../home/home";
-import * as Globals from "../../globals/globals"
+import {HomePage} from "../../home/home";
+import * as Globals from "../../../globals/globals"
 import {Http, Headers} from "@angular/http";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 

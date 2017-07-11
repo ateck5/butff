@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import {LoginPage} from "../login/login";
+import {LoginPage} from "../auth/login/login";
 import * as Globals from "../../globals/globals"
 
 @Component({

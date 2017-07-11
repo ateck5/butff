@@ -1,11 +1,11 @@
 import {Component, Injectable} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Http} from "@angular/http";
-import {EditAccommodationUserPage} from "../edit-accommodation-user/edit-accommodation-user";
-import * as Globals from "../../globals/globals";
-import {LoginPage} from "../login/login";
+import {EditAppointmentPage} from "../edit-appointment/edit-appointment";
+import * as Globals from "../../../globals/globals"
+import {LoginPage} from "../../auth/login/login";
 /**
- * Generated class for the AccommodationsPage page.
+ * Generated class for the AppointmentsPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
@@ -21,6 +21,7 @@ class myHTTPService {
     configEndPoint: string = Globals.globals.url + "user/" + this.currentUser.id;
     // configEndPoint: string = 'http://localhost:8000/api/user/1';
 
+
     //get http up and running
     getConfig() {
         return this.http
@@ -28,25 +29,25 @@ class myHTTPService {
             .map(res => res.json());
     }
 }
-
 @Component({
-    selector: 'page-accommodations',
-    templateUrl: 'accommodations.html',
+    selector: 'page-appointments',
+    templateUrl: 'appointments.html',
     providers: [myHTTPService],
-})
-export class AccommodationsPage {
 
-    accommodations: Array<{ id: number, name: string, email: string, country: string, city: string, street: string, streetNumber?: string, postcode: string, phone: string, phoneCountry?: string, price?: string, dateArrival: any, dateDepartment: any }>;
+})
+export class AppointmentsPage {
+    appointments: Array<{ id: number, name: string, type: string, description: string, country?: string, city?: string, street?: string, streetNumber?: string, postcode?: string, timeStart: any, timeEnd?: any }>;
     user: Globals.user;
-    accommodationsUser;
+    appointmentsUser;
     ready: boolean = false;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private myService: myHTTPService) {
-        this.accommodations = [];
+        this.appointments = [];
         this.getCurrentUser();
     }
 
     private getCurrentUser() {
+
         this.user = new Globals.user;
 
         let userApi = JSON.parse(localStorage.getItem("currentUser"));
@@ -71,53 +72,50 @@ export class AccommodationsPage {
         this.http.get(url)
             .subscribe(res => {
                 this.user = res.json();
-                this.getAccommodationsUser();
+                this.getAppointmentsUser();
             }, (err) => {
                 console.log('err', err);
                 console.log(err._body);
             });
     }
 
-    private getAccommodationsUser() {
-        let url = Globals.globals.url + "accommodationUser/" + this.user.id;
-        // let url = "http://localhost:8000/api/accommodationUser/" + this.currentUser.id;
+    private getAppointmentsUser() {
+        let url = Globals.globals.url + "appointmentUser/" + this.user.id;
+        // let url = "http://localhost:8000/api/appointmentUser/" + this.currentUser.id;
         this.http.get(url)
             .subscribe(res => {
-                this.accommodationsUser = res.json();
-                this.getAccommodations();
+                this.appointmentsUser = res.json();
+
+                console.log(this.appointmentsUser);
+                this.getAppointments();
             }, (err) => {
                 console.log('err', err);
                 console.log(err._body);
             });
     }
 
-    private getAccommodations() {
+    private getAppointments() {
         //TODO: handle this in one request
         //get all accommodations from the user, one by one
-        for (let accommodationUser in this.accommodationsUser) {
-            let url = Globals.globals.url + "accommodation/" + this.accommodationsUser[accommodationUser].id;
-            // let url = "http://localhost:8000/api/accommodation/" + this.accommodationsUser[accommodationUser].id;
+        for (let appointmentUser in this.appointmentsUser) {
+            let url = Globals.globals.url + "appointment/" + this.appointmentsUser[appointmentUser].appointment_id;
+            // let url = "http://localhost:8000/api/appointment/" + this.appointmentsUser[appointmentUser].appointment_id;
             this.http.get(url)
                 .subscribe(res => {
                     let result = res.json();
-                    //price, datearrival and datedepartment are from accommodationsuser
-                    this.accommodations.push({
+                    this.appointments.push({
                         id: result.id,
                         name: result.name,
-                        email: result.email,
+                        type: result.type,
+                        description: result.description,
                         country: result.country,
                         city: result.city,
                         street: result.street,
                         streetNumber: result.streetNumber,
                         postcode: result.postcode,
-                        phone: result.phone,
-                        phoneCountry: result.phoneCountrycode,
-                        price: this.accommodationsUser[accommodationUser].price,
-                        dateArrival: this.accommodationsUser[accommodationUser].dateArrival,
-                        dateDepartment: this.accommodationsUser[accommodationUser].dateDepartment
+                        timeStart: result.timeStart,
+                        timeEnd: result.timeEnd
                     });
-                    console.log(this.accommodations);
-                    console.log(res.json());
                 }, (err) => {
                     console.log('err', err);
                     console.log(err._body);
@@ -127,7 +125,7 @@ export class AccommodationsPage {
     }
 
     ionViewDidLoad() {
-        console.log('ionViewDidLoad AccommodationsPage');
+        console.log('ionViewDidLoad AppointmentsPage');
         if (localStorage.getItem("currentUser") === null) {
             this.navCtrl.setRoot(LoginPage);
         }
@@ -138,13 +136,14 @@ export class AccommodationsPage {
         if (this.ready) {
             //close all carousel items
             let isActive = document.getElementById("item" + id.toString()).classList.contains('active');
-            for (let id in this.accommodations) {
-                document.getElementById("item" + this.accommodations[id].id.toString()).classList.remove("active");
-                document.getElementById("item" + this.accommodations[id].id.toString()).classList.add("hidden");
-                document.getElementById("iconArrow" + this.accommodations[id].id.toString()).classList.remove("ion-md-arrow-dropdown");
-                document.getElementById("iconArrow" + this.accommodations[id].id.toString()).classList.add("ion-md-arrow-dropright");
-                document.getElementById("iconEdit" + this.accommodations[id].id.toString()).classList.remove("active");
-                document.getElementById("iconEdit" + this.accommodations[id].id.toString()).classList.add("hidden");
+            for (let id in this.appointments) {
+                document.getElementById("item" + this.appointments[id].id.toString()).classList.remove("active");
+                document.getElementById("item" + this.appointments[id].id.toString()).classList.add("hidden");
+                document.getElementById("iconArrow" + this.appointments[id].id.toString()).classList.remove("ion-md-arrow-dropdown");
+                document.getElementById("iconArrow" + this.appointments[id].id.toString()).classList.add("ion-md-arrow-dropright");
+                document.getElementById("iconEdit" + this.appointments[id].id.toString()).classList.remove("active");
+                document.getElementById("iconEdit" + this.appointments[id].id.toString()).classList.add("hidden");
+
             }
             if (!isActive) {
                 //open active carousel item
@@ -158,7 +157,7 @@ export class AccommodationsPage {
         }
     }
 
-    editAccommodationUserPage(accommodationUser) {
-        this.navCtrl.push(EditAccommodationUserPage, {accommodationUser: accommodationUser});
+    editAppointmentPage(appointment) {
+        this.navCtrl.push(EditAppointmentPage, {appointment: appointment});
     }
 }

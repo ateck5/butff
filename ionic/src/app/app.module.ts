@@ -17,6 +17,7 @@ import {LoginPage} from "../pages/auth/login/login";
 import {EditUserPage} from "../pages/user/edit-user/edit-user";
 import {EditAppointmentPage} from "../pages/appointment/edit-appointment/edit-appointment";
 import {EditAccommodationUserPage} from "../pages/accommodation/edit-accommodation-user/edit-accommodation-user";
+import {CreateUserPage} from "../pages/user/create-user/create-user";
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import {EditAccommodationUserPage} from "../pages/accommodation/edit-accommodati
         EditUserPage,
         EditAppointmentPage,
         EditAccommodationUserPage,
+        CreateUserPage,
 
     ],
     imports: [
@@ -51,6 +53,8 @@ import {EditAccommodationUserPage} from "../pages/accommodation/edit-accommodati
         EditUserPage,
         EditAppointmentPage,
         EditAccommodationUserPage,
+        CreateUserPage,
+
     ],
     providers: [
         StatusBar,

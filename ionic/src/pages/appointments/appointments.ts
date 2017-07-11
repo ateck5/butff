@@ -3,6 +3,7 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Http} from "@angular/http";
 import {EditAppointmentPage} from "../edit-appointment/edit-appointment";
 import * as Globals from "../../globals/globals"
+import {LoginPage} from "../login/login";
 /**
  * Generated class for the AppointmentsPage page.
  *
@@ -15,9 +16,8 @@ class myHTTPService {
     constructor(private http: Http) {
     }
 
-    //TODO: user id is still static
+    //get endpoint
     currentUser: any = {id: 1};
-
     configEndPoint: string = Globals.globals.url + "user/" + this.currentUser.id;
     // configEndPoint: string = 'http://localhost:8000/api/user/1';
 
@@ -37,7 +37,7 @@ class myHTTPService {
 })
 export class AppointmentsPage {
     appointments: Array<{ id: number, name: string, type: string, description: string, country?: string, city?: string, street?: string, streetNumber?: string, postcode?: string, timeStart: any, timeEnd?: any }>;
-    currentUser;
+    user: Globals.user;
     appointmentsUser;
     ready: boolean = false;
 
@@ -48,17 +48,30 @@ export class AppointmentsPage {
 
     private getCurrentUser() {
 
-        //TODO: change getCurrentUser to fetch data from localstorage
-        this.currentUser = {
-            id: 3
-        };
+        this.user = new Globals.user;
 
-        let url = Globals.globals.url + "user/" + this.currentUser.id;
+        let userApi = JSON.parse(localStorage.getItem("currentUser"));
+        this.user.id = userApi.id;
+        this.user.firstname = userApi.firstname;
+        this.user.lastname = userApi.lastname;
+        this.user.email = userApi.email;
+        this.user.phone = userApi.phone;
+        this.user.phoneCountry = userApi.phoneCountry;
+        this.user.nickname = userApi.nickname;
+        this.user.country = userApi.country;
+        this.user.city = userApi.city;
+        this.user.street = userApi.street;
+        this.user.streetNumber = userApi.streetNumber;
+        this.user.postcode = userApi.postcode;
+        this.user.discount = userApi.discount;
+        this.user.discountDescription = userApi.discountDescription;
+
+        let url = Globals.globals.url + "user/" + this.user.id;
         // let url = "http://localhost:8000/api/user/3";
 
         this.http.get(url)
             .subscribe(res => {
-                this.currentUser = res.json();
+                this.user = res.json();
                 this.getAppointmentsUser();
             }, (err) => {
                 console.log('err', err);
@@ -67,7 +80,7 @@ export class AppointmentsPage {
     }
 
     private getAppointmentsUser() {
-        let url = Globals.globals.url + "appointmentUser/" + this.currentUser.id;
+        let url = Globals.globals.url + "appointmentUser/" + this.user.id;
         // let url = "http://localhost:8000/api/appointmentUser/" + this.currentUser.id;
         this.http.get(url)
             .subscribe(res => {
@@ -113,6 +126,9 @@ export class AppointmentsPage {
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad AppointmentsPage');
+        if (localStorage.getItem("currentUser") === null) {
+            this.navCtrl.setRoot(LoginPage);
+        }
     }
 
     toggleActive(id) {

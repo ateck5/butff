@@ -3,6 +3,7 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Http, Headers} from "@angular/http";
 import * as Globals from "../../globals/globals"
+import {LoginPage} from "../login/login";
 
 /**
  * Generated class for the EditAccommodationUserPage page.
@@ -16,9 +17,8 @@ class myHTTPService {
     constructor(private http: Http) {
     }
 
-    //TODO: user id is still static
+    //get endpoint
     currentUser: any = {id: 1};
-
     configEndPoint: string = Globals.globals.url + "user/" + this.currentUser.id;
 
     // configEndPoint: string = 'http://localhost:8000/api/user/1';
@@ -63,6 +63,9 @@ export class EditAccommodationUserPage {
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad EditAccommodationUserPage');
+        if (localStorage.getItem("currentUser") === null) {
+            this.navCtrl.setRoot(LoginPage);
+        }
     }
 
     logForm() {
@@ -76,7 +79,7 @@ export class EditAccommodationUserPage {
         this.accommodationUser.dateArrival = this.accommodationUserForm.value.dateArrival.replace("T", " ").replace("Z", "");
         this.accommodationUser.dateDepartment = this.accommodationUserForm.value.dateDepartment.replace("T", " ").replace("Z", "");
 
-        let url = Globals.globals.url + "accommodationUser" + this.accommodationUser.id;
+        let url = Globals.globals.url + "accommodationUser/" + this.accommodationUser.id;
         // let url = "http://localhost:8000/api/accommodationUser/" + this.accommodationUser.id;
 
         this.http.put(url, JSON.stringify(this.accommodationUser), {headers: headers})

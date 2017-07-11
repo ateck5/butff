@@ -9,6 +9,7 @@ import {UserDetailsPage} from "../pages/user-details/user-details";
 import {AppointmentsPage} from "../pages/appointments/appointments";
 import {AccommodationsPage} from "../pages/accommodations/accommodations";
 import {LogoutPage} from "../pages/logout/logout";
+import {LoginPage} from "../pages/login/login";
 
 
 @Component({
@@ -17,7 +18,8 @@ import {LogoutPage} from "../pages/logout/logout";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = LoginPage;
+  // rootPage: any = HomePage;
 
   pages: Array<{title: string, component: any, icon?:string }>;
 

@@ -3,6 +3,7 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Http, Headers} from "@angular/http";
 import * as Globals from "../../globals/globals"
+import {LoginPage} from "../login/login";
 
 /**
  * Generated class for the EditAppointmentPage page.
@@ -16,10 +17,10 @@ class myHTTPService {
     constructor(private http: Http) {
     }
 
-    //TODO: user id is still static
+    //get endpoint
     currentUser: any = {id: 1};
-
     configEndPoint: string = Globals.globals.url + "user/" + this.currentUser.id;
+
     // configEndPoint: string = 'http://localhost:8000/api/user/1';
 
 
@@ -38,10 +39,18 @@ class myHTTPService {
 export class EditAppointmentPage {
     private appointmentForm: FormGroup;
     appointment;
+    maxDate;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private http: Http, private myService: myHTTPService) {
         this.navParams.get("appointment");
         this.appointment = this.navParams.data.appointment;
+
+        this.maxDate = new Date().toISOString();
+        this.maxDate = "2100" +  this.maxDate.slice(4, this.maxDate.length - 5).replace("T", " ");
+        // this.maxDate = this.maxDate.replace("T", " ");
+        // this.maxDate = "2100" + this.maxDate.split("").reverse().slice(0, this.maxDate.length - 2).reverse().join("");
+
+
 
         //change database datetime format to form datetime format
         let dateStart = this.appointment.timeStart.replace(" ", "T") + "Z";
@@ -61,17 +70,22 @@ export class EditAppointmentPage {
             timeEnd: [dateEnd]
         });
 
+        console.log(this.maxDate);
+        console.log(this.appointmentForm.value.timeStart);
+
     }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad EditAppointmentPage');
+        if (localStorage.getItem("currentUser") === null) {
+            this.navCtrl.setRoot(LoginPage);
+        }
     }
 
     logForm() {
 
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-
 
         this.appointment.name = this.appointmentForm.value.name;
         this.appointment.type = this.appointmentForm.value.type;

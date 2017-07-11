@@ -5,19 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\User as User;
+use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class LoginController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users[] = User::all();
-
-        return response()->json($users, 200);
+        return response()->json("index", 200);
     }
 
     /**
@@ -33,11 +32,14 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
-        //
+        return response()->json("store", 200);
+        $user = json_decode($request);
+        return response()->json($user, 200);
     }
 
     /**
@@ -48,9 +50,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
-
-        return response()->json($user, 200);
+        //
     }
 
     /**
@@ -67,30 +67,24 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @param  \Illuminate\Http\Request $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-
         $data = $request->all();
-        //TODO: add updated timestamp
 
-        $user->firstname = $data['firstname'];
-        $user->lastname = $data['lastname'];
-        $user->email = $data['email'];
-        $user->phone = $data['phone'];
-        $user->phoneCountryCode = $data['phoneCountry'];
-        $user->nickname = $data['nickname'];
-        $user->country = $data['country'];
-        $user->city = $data['city'];
-        $user->street = $data['street'];
-        $user->streetNumber = $data['streetNumber'];
-        $user->postcode = $data['postcode'];
-        $user->update();
+        $username = $data['username'];
+        $password = $data['password'];
 
-        return response()->json($user, 200);
+        $user = User::where('username', $username)->first();
+
+        if (Hash::check($password, $user->password)) {
+            return response()->json($user, 200);
+        }
+        return response()->json("Credentials did not match.", 403);
+
     }
 
     /**

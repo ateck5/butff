@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {LoginPage} from "../login/login";
 
 /**
  * Generated class for the EditAccommodationPage page.
@@ -19,6 +20,9 @@ export class EditAccommodationPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditAccommodationPage');
+    if (localStorage.getItem("currentUser") === null) {
+      this.navCtrl.setRoot(LoginPage);
+    }
   }
 
 }

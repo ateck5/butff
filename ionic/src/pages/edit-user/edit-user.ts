@@ -3,6 +3,7 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Http, Headers} from "@angular/http";
 import * as Globals from "../../globals/globals"
+import {LoginPage} from "../login/login";
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -20,9 +21,8 @@ class myHTTPService {
     constructor(private http: Http) {
     }
 
-    //TODO: user id is still static
+    //get endpoint
     currentUser: any = {id: 1};
-
     configEndPoint: string = Globals.globals.url + "user/" + this.currentUser.id;
     // configEndPoint: string = 'http://localhost:8000/api/user/1';
 
@@ -48,6 +48,7 @@ export class EditUserPage {
     constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private http: Http, private myService: myHTTPService) {
         this.navParams.get("user");
         this.user = this.navParams.data.user;
+        console.log(this.navParams.data.user);
 
         //TODO: validating, ex: length
         this.userForm = this.formBuilder.group({
@@ -55,7 +56,7 @@ export class EditUserPage {
             lastname: [this.user.lastname, Validators.required],
             email: [this.user.email, Validators.required],
             phone: [this.user.phone, Validators.required],
-            phoneCountrycode: [this.user.phoneCountrycode],
+            phoneCountry: [this.user.phoneCountry],
             nickname: [this.user.nickname],
             country: [this.user.country],
             city: [this.user.city],
@@ -69,6 +70,10 @@ export class EditUserPage {
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad EditUserPage');
+        console.log(localStorage.getItem("currentUser"));
+        if (localStorage.getItem("currentUser") === null) {
+            this.navCtrl.setRoot(LoginPage);
+        }
     }
 
 
@@ -88,15 +93,14 @@ export class EditUserPage {
         this.user.streetNumber = this.userForm.value.streetNumber;
         this.user.postcode = this.userForm.value.postcode;
 
-        //TODO: user id is still static
-        this.currentUser = {id: 1};
-        let url = Globals.globals.url + "user/" + this.currentUser.id;
+        // this.currentUser = {id: 1};
+        let url = Globals.globals.url + "user/" + this.user.id;
         // let url = "http://localhost:8000/api/user/1";
+        console.log(this.user);
 
         this.http.put(url, JSON.stringify(this.user), {headers: headers})
             .subscribe(res => {
                 console.log('res', res.json());
-                //TODO: refresh page after pop
                 this.navCtrl.pop();
             }, (err) => {
                 console.log('err', err);

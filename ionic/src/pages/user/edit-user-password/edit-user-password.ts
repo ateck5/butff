@@ -2,14 +2,15 @@ import {Component, Injectable} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Http, Headers} from "@angular/http";
-import {LoginPage} from "../../auth/login/login";
 import * as Globals from "../../../globals/globals"
+import {LoginPage} from "../../auth/login/login";
 
-
-
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/Rx';
 
 /**
- * Generated class for the CreateUserPage page.
+ * Generated class for the EditUserPasswordPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
@@ -33,18 +34,18 @@ class myHTTPService {
             .map(res => res.json());
     }
 }
-
 @Component({
-    selector: 'page-create-user',
-    templateUrl: 'create-user.html',
+    selector: 'page-edit-user',
+    templateUrl: 'edit-user-password.html',
     providers: [myHTTPService],
 })
-export class CreateUserPage {
-    private userForm: FormGroup;
-    user: Globals.user;
-    newUser;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private http: Http) {
+export class EditUserPasswordPage {
+    private userForm: FormGroup;
+    currentUser;
+    user;
+
+    constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private http: Http, private myService: myHTTPService) {
         this.user = new Globals.user;
 
         let userApi = JSON.parse(localStorage.getItem("currentUser"));
@@ -63,36 +64,25 @@ export class CreateUserPage {
         this.user.discount = userApi.discount;
         this.user.discountDescription = userApi.discountDescription;
 
+        //TODO: validating, ex: length
         this.userForm = this.formBuilder.group({
-            username: ['', Validators.required],
-            firstname: ['', Validators.required],
-            lastname: ['', Validators.required],
             password: ['', Validators.required],
             passwordRepeat: ['', Validators.required],
-            email: ['', Validators.required],
-            phone: ['', Validators.required],
-            phoneCountry: [''],
-            nickname: [''],
-            country: [''],
-            city: [''],
-            street: [''],
-            streetNumber: [''],
-            postcode: [''],
-            discount: [''],
-            discountDescription: ['']
         });
+
+        console.log('userform', this.userForm);
     }
 
     ionViewDidLoad() {
-        console.log('ionViewDidLoad CreateUserPage');
+        console.log('ionViewDidLoad EditUserPasswordPage');
+        console.log(localStorage.getItem("currentUser"));
         if (localStorage.getItem("currentUser") === null) {
             this.navCtrl.setRoot(LoginPage);
         }
     }
 
-    logForm() {
-        console.log(this.userForm.value.password, this.userForm.value.passwordRepeat, this.userForm.value.password !== this.userForm.value.passwordRepeat)
 
+    logForm() {
         if (this.userForm.value.password !== this.userForm.value.passwordRepeat) {
             console.log(this.userForm.value);
             this.userForm.controls['password'].setValue('');
@@ -101,38 +91,24 @@ export class CreateUserPage {
             console.log(this.userForm.value);
             return;
         }
-            this.newUser = {
-                username: this.userForm.value.username,
-                firstname: this.userForm.value.firstname,
-                lastname: this.userForm.value.lastname,
-                password: this.userForm.value.password,
-                email: this.userForm.value.email,
-                phone: this.userForm.value.phone,
-                phoneCountry: this.userForm.value.phoneCountry,
-                nickname: this.userForm.value.nickname,
-                country: this.userForm.value.country,
-                city: this.userForm.value.city,
-                street: this.userForm.value.street,
-                streetNumber: this.userForm.value.streetNumber,
-                postcode: this.userForm.value.postcode,
-                discount: this.userForm.value.discount,
-                discountDescription: this.userForm.value.discountDescription,
-            };
-            console.log(this.newUser);
 
-        // let url = Globals.globals.url + "user";
-        let url = "/api/user";
+        let newPassword = this.userForm.value.password;
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        // console.log(JSON.stringify(this.user));
-        this.http.post(url, JSON.stringify(this.newUser), {headers: headers})
+        console.log(this.user);
+
+        let url = Globals.globals.url + "user/" + this.user.id + "/changepassword";
+        // let url = "http://localhost:8000/api/user/1";
+        console.log(newPassword);
+
+        this.http.put(url, JSON.stringify(this.user), {headers:headers})
             .subscribe(res => {
                 console.log('res', res.json());
+                this.navCtrl.pop();
             }, (err) => {
                 console.log('err', err);
                 console.log(err._body);
             });
     }
-
 }

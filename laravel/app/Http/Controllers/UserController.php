@@ -28,6 +28,7 @@ class UserController extends Controller
     public function create()
     {
         //
+
     }
 
     /**
@@ -35,9 +36,33 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
-        //
+//        return response()->json("store", 200);
+//        return response()->json($user, 200);
+
+        $userObject = new User();
+        $userObject->username = $request['username'];
+        $userObject->firstname = $request['firstname'];
+        $userObject->lastname = $request['lastname'];
+        $userObject->password = bcrypt($request['password']);
+        $userObject->email = $request['email'];
+        $userObject->phone = $request['phone'];
+        $userObject->phoneCountrycode = $request['phoneCountry'];
+        $userObject->nickname = $request['nickname'];
+        $userObject->country = $request['country'];
+        $userObject->city = $request['city'];
+        $userObject->street = $request['street'];
+        $userObject->streetNumber = $request['streetNumber'];
+        $userObject->postcode = $request['postcode'];
+        $userObject->discountTotal = $request['discount'];
+        $userObject->discountDescription = $request['discountDescription'];
+        $userObject->role_id = 4;
+
+        $userObject->save();
+
+        return response()->json([$userObject, $request->all()], 200);
+
     }
 
     /**
@@ -91,6 +116,26 @@ class UserController extends Controller
         $user->update();
 
         return response()->json($user, 200);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function changePassword(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+//        var_dump($request);
+
+        $data = $request->all();
+        $user->password = bcrypt($request['password']);
+//        $user->update();
+
+
+        return response()->json([$user, $request, $data], 200);
     }
 
     /**

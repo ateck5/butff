@@ -18,6 +18,7 @@ import {EditUserPage} from "../pages/user/edit-user/edit-user";
 import {EditAppointmentPage} from "../pages/appointment/edit-appointment/edit-appointment";
 import {EditAccommodationUserPage} from "../pages/accommodation/edit-accommodation-user/edit-accommodation-user";
 import {CreateUserPage} from "../pages/user/create-user/create-user";
+import {EditUserPasswordPage} from "../pages/user/edit-user-password/edit-user-password";
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import {CreateUserPage} from "../pages/user/create-user/create-user";
         LoginPage,
         LogoutPage,
         EditUserPage,
+        EditUserPasswordPage,
         EditAppointmentPage,
         EditAccommodationUserPage,
         CreateUserPage,
@@ -51,6 +53,7 @@ import {CreateUserPage} from "../pages/user/create-user/create-user";
         LoginPage,
         LogoutPage,
         EditUserPage,
+        EditUserPasswordPage,
         EditAppointmentPage,
         EditAccommodationUserPage,
         CreateUserPage,

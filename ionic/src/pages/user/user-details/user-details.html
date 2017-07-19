@@ -26,6 +26,13 @@
             </button>
         </ion-list-header>
         <ion-item>
+            Change password?
+            <button ion-button item-right large>
+                <ion-icon name="create" (click)="editUserPasswordPage()"></ion-icon>
+
+            </button>
+        </ion-item>
+        <ion-item>
             {{user.email}}
             <p item-right class="blue">
                 Email

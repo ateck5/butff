@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 
 
 Route::resource('/user', "UserController");
+Route::put('/user/{id}/changepassword', "UserController@changePassword");
 Route::resource('/appointment', "AppointmentController");
 Route::resource('/appointmentUser', "AppointmentUserController");
 Route::resource('/accommodation', "AccommodationController");

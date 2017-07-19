@@ -8,6 +8,7 @@ import * as Globals from "../../../globals/globals"
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/Rx';
+import {EditUserPasswordPage} from "../edit-user-password/edit-user-password";
 
 
 /**
@@ -76,5 +77,9 @@ export class UserDetailsPage {
 
     editUsersPage(){
         this.navCtrl.push(EditUserPage, {user: this.user});
+    }
+
+    editUserPasswordPage(){
+        this.navCtrl.push(EditUserPasswordPage);
     }
 }

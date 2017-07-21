@@ -16,6 +16,7 @@ export class user {
     street?: string;
     streetNumber?: string;
     postcode?: string;
+    sessionId?: string;
     discount?: string;
     discountDescription?: string;
 }

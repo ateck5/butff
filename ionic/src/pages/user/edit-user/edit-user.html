@@ -58,6 +58,14 @@
             <ion-label>Postcode</ion-label>
             <ion-input type="text" formControlName="postcode"></ion-input>
         </ion-item>
+        <ion-item>
+            <ion-label>Discount</ion-label>
+            <ion-input type="number" min="0" step="0.01" formControlName="discount"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Discount description</ion-label>
+            <ion-input type="text" formControlName="discountDescription"></ion-input>
+        </ion-item>
         <button ion-button type="submit" [disabled]="!userForm.valid">Submit</button>
     </form>
 </ion-content>

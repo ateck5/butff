@@ -38,10 +38,13 @@ class myHTTPService {
 export class AppointmentsPage {
     appointments: Array<{ id: number, name: string, type: string, description: string, country?: string, city?: string, street?: string, streetNumber?: string, postcode?: string, timeStart: any, timeEnd?: any }>;
     user: Globals.user;
+    userApi;
     appointmentsUser;
     ready: boolean = false;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private myService: myHTTPService) {
+        this.userApi = JSON.parse(localStorage.getItem("currentUser"));
+
         this.appointments = [];
         this.getCurrentUser();
     }
@@ -66,21 +69,11 @@ export class AppointmentsPage {
         this.user.discount = userApi.discount;
         this.user.discountDescription = userApi.discountDescription;
 
-        let url = Globals.globals.url + "user/" + this.user.id;
-        // let url = "http://localhost:8000/api/user/3";
-
-        this.http.get(url)
-            .subscribe(res => {
-                this.user = res.json();
-                this.getAppointmentsUser();
-            }, (err) => {
-                console.log('err', err);
-                console.log(err._body);
-            });
+        this.getAppointmentsUser();
     }
 
     private getAppointmentsUser() {
-        let url = Globals.globals.url + "appointmentUser/" + this.user.id;
+        let url = Globals.globals.url + "appointmentUser/" + this.userApi.id;
         // let url = "http://localhost:8000/api/appointmentUser/" + this.currentUser.id;
         this.http.get(url)
             .subscribe(res => {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Faker\Provider\DateTime;
 use Illuminate\Http\Request;
 
 use App\User as User;
@@ -79,11 +80,15 @@ class LoginController extends Controller
         $password = $data['password'];
 
         $user = User::where('username', $username)->first();
+//        var_dump($user->discount);
 
         if (Hash::check($password, $user->password)) {
+            $session_id = bcrypt( $user->id + date("Y-m-d H:i:s") );
+            $user->sessionId = $session_id;
+            $user->update();
             return response()->json($user, 200);
         }
-        return response()->json("Credentials did not match.", 403);
+        return response()->json("Error: Credentials did not match.", 403);
 
     }
 

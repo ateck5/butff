@@ -41,27 +41,13 @@ class myHTTPService {
 })
 export class CreateUserPage {
     private userForm: FormGroup;
-    user: Globals.user;
+    apiRequestData;
+    userApi;
     newUser;
+    messageString;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private http: Http) {
-        this.user = new Globals.user;
-
-        let userApi = JSON.parse(localStorage.getItem("currentUser"));
-        this.user.id = userApi.id;
-        this.user.firstname = userApi.firstname;
-        this.user.lastname = userApi.lastname;
-        this.user.email = userApi.email;
-        this.user.phone = userApi.phone;
-        this.user.phoneCountry = userApi.phoneCountry;
-        this.user.nickname = userApi.nickname;
-        this.user.country = userApi.country;
-        this.user.city = userApi.city;
-        this.user.street = userApi.street;
-        this.user.streetNumber = userApi.streetNumber;
-        this.user.postcode = userApi.postcode;
-        this.user.discount = userApi.discount;
-        this.user.discountDescription = userApi.discountDescription;
+        this.userApi = JSON.parse(localStorage.getItem("currentUser"));
 
         this.userForm = this.formBuilder.group({
             username: ['', Validators.required],
@@ -97,11 +83,12 @@ export class CreateUserPage {
             console.log(this.userForm.value);
             this.userForm.controls['password'].setValue('');
             this.userForm.controls['passwordRepeat'].setValue('');
-
+            this.messageString = "ERROR: Passwords did not match.";
             console.log(this.userForm.value);
             return;
         }
-            this.newUser = {
+        this.apiRequestData = {
+            newUser: {
                 username: this.userForm.value.username,
                 firstname: this.userForm.value.firstname,
                 lastname: this.userForm.value.lastname,
@@ -117,6 +104,14 @@ export class CreateUserPage {
                 postcode: this.userForm.value.postcode,
                 discount: this.userForm.value.discount,
                 discountDescription: this.userForm.value.discountDescription,
+            },
+            activeUser: {
+                id: this.userApi.id,
+                sessionId: this.userApi.sessionId
+            }
+        };
+            this.newUser = {
+
             };
             console.log(this.newUser);
 
@@ -126,12 +121,16 @@ export class CreateUserPage {
         headers.append('Content-Type', 'application/json');
 
         // console.log(JSON.stringify(this.user));
-        this.http.post(url, JSON.stringify(this.newUser), {headers: headers})
+        this.http.post(url, JSON.stringify(this.apiRequestData), {headers: headers})
             .subscribe(res => {
                 console.log('res', res.json());
+                this.messageString = "SUCCES: User " + this.apiRequestData.newUser.username + " was added to the database.";
             }, (err) => {
                 console.log('err', err);
                 console.log(err._body);
+                if (err.status === 400){
+                    this.messageString = err._body.replace('"', "");
+                }
             });
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Appointment;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
@@ -74,21 +75,27 @@ class AppointmentController extends Controller
      */
     public function update(Request $request, $id)
     {
+//        return response()->json([$request['appointment'], $request['activeUser'], $id], 200);
+        $activeUser = User::findOrFail($request['activeUser']['id']);
+        $sessionId = $request['activeUser']['sessionId'];
+        if ($sessionId !== $activeUser['sessionId']){
+            return response()->json("Error: Credentials did not match", 403);
+        }
+
         $appointment = Appointment::findOrFail($id);
 
-        $data = $request->all();
         //TODO: add updated timestamp
 
-        $appointment->name = $data['name'];
-        $appointment->type = $data['type'];
-        $appointment->description = $data['description'];
-        $appointment->country = $data['country'];
-        $appointment->city = $data['city'];
-        $appointment->street = $data['street'];
-        $appointment->streetNumber = $data['streetNumber'];
-        $appointment->postcode = $data['postcode'];
-        $appointment->timeStart = $data['timeStart'];
-        $appointment->timeEnd = $data['timeEnd'];
+        $appointment->name = $request['appointment']['name'];
+        $appointment->type = $request['appointment']['type'];
+        $appointment->description = $request['appointment']['description'];
+        $appointment->country = $request['appointment']['country'];
+        $appointment->city = $request['appointment']['city'];
+        $appointment->street = $request['appointment']['street'];
+        $appointment->streetNumber = $request['appointment']['streetNumber'];
+        $appointment->postcode = $request['appointment']['postcode'];
+        $appointment->timeStart = $request['appointment']['timeStart'];
+        $appointment->timeEnd = $request['appointment']['timeEnd'];
         $appointment->update();
 
         return response()->json($appointment, 200);

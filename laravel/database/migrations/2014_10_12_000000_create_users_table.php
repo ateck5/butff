@@ -33,6 +33,7 @@ class CreateUsersTable extends Migration
                 $table->string('phoneCountrycode', 191)->nullable();
                 $table->float('discountTotal')->nullable();
                 $table->string('discountDescription', 191)->nullable();
+                $table->string('sessionId', 191)->nullable();
                 $table->string('year', 191)->nullable();
                 $table->rememberToken();
                 $table->timestamps();

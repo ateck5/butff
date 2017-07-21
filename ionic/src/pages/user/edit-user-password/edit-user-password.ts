@@ -42,27 +42,17 @@ class myHTTPService {
 
 export class EditUserPasswordPage {
     private userForm: FormGroup;
+    userApi;
+    apiRequestData;
     currentUser;
+    messageString;
     user;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private http: Http, private myService: myHTTPService) {
         this.user = new Globals.user;
 
-        let userApi = JSON.parse(localStorage.getItem("currentUser"));
-        this.user.id = userApi.id;
-        this.user.firstname = userApi.firstname;
-        this.user.lastname = userApi.lastname;
-        this.user.email = userApi.email;
-        this.user.phone = userApi.phone;
-        this.user.phoneCountry = userApi.phoneCountry;
-        this.user.nickname = userApi.nickname;
-        this.user.country = userApi.country;
-        this.user.city = userApi.city;
-        this.user.street = userApi.street;
-        this.user.streetNumber = userApi.streetNumber;
-        this.user.postcode = userApi.postcode;
-        this.user.discount = userApi.discount;
-        this.user.discountDescription = userApi.discountDescription;
+        this.userApi = JSON.parse(localStorage.getItem("currentUser"));
+
 
         //TODO: validating, ex: length
         this.userForm = this.formBuilder.group({
@@ -88,21 +78,30 @@ export class EditUserPasswordPage {
             this.userForm.controls['password'].setValue('');
             this.userForm.controls['passwordRepeat'].setValue('');
 
+            this.messageString = "ERROR: Passwords did not match.";
+
             console.log(this.userForm.value);
             return;
         }
 
-        let newPassword = this.userForm.value.password;
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-
         console.log(this.user);
 
-        let url = Globals.globals.url + "user/" + this.user.id + "/changepassword";
-        // let url = "http://localhost:8000/api/user/1";
-        console.log(newPassword);
+        let url = Globals.globals.url + "user/" + this.userApi.id + "/changepassword";
 
-        this.http.put(url, JSON.stringify(this.user), {headers:headers})
+        let newPassword = this.userForm.value.password;
+
+        // let url = "http://localhost:8000/api/user/1";
+        this.apiRequestData = {
+            activeUser: {
+                id: this.userApi.id,
+                sessionId: this.userApi.sessionId
+            },
+            password: {password: newPassword}
+        };
+
+        this.http.put(url, JSON.stringify(this.apiRequestData), {headers:headers})
             .subscribe(res => {
                 console.log('res', res.json());
                 this.navCtrl.pop();

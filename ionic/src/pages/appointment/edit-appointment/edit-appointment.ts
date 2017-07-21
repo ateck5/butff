@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Http, Headers} from "@angular/http";
 import * as Globals from "../../../globals/globals"
 import {LoginPage} from "../../auth/login/login";
+import {AppointmentsPage} from "../appointments/appointments";
 
 /**
  * Generated class for the EditAppointmentPage page.
@@ -38,10 +39,14 @@ class myHTTPService {
 })
 export class EditAppointmentPage {
     private appointmentForm: FormGroup;
+    userApi;
+    apiRequestData;
     appointment;
     maxDate;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private http: Http, private myService: myHTTPService) {
+        this.userApi = JSON.parse(localStorage.getItem("currentUser"));
+
         this.navParams.get("appointment");
         this.appointment = this.navParams.data.appointment;
 
@@ -83,30 +88,36 @@ export class EditAppointmentPage {
     }
 
     logForm() {
-
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
+        this.apiRequestData = {
+            appointment: {
+                name: this.appointmentForm.value.name,
+                type: this.appointmentForm.value.type,
+                description: this.appointmentForm.value.description,
+                country: this.appointmentForm.value.country,
+                city: this.appointmentForm.value.city,
+                street: this.appointmentForm.value.street,
+                streetNumber: this.appointmentForm.value.streetNumber,
+                postcode: this.appointmentForm.value.postcode,
+                timeStart: this.appointmentForm.value.timeStart.replace("T", " ").replace("Z", ""),
+                timeEnd: this.appointmentForm.value.timeEnd.replace("T", " ").replace("Z", ""),
 
-        this.appointment.name = this.appointmentForm.value.name;
-        this.appointment.type = this.appointmentForm.value.type;
-        this.appointment.description = this.appointmentForm.value.description;
-        this.appointment.country = this.appointmentForm.value.country;
-        this.appointment.city = this.appointmentForm.value.city;
-        this.appointment.street = this.appointmentForm.value.street;
-        this.appointment.streetNumber = this.appointmentForm.value.streetNumber;
-        this.appointment.postcode = this.appointmentForm.value.postcode;
-        //change form datetime format to database datetime format
-        this.appointment.timeStart = this.appointmentForm.value.timeStart.replace("T", " ").replace("Z", "");
-        this.appointment.timeEnd = this.appointmentForm.value.timeEnd.replace("T", " ").replace("Z", "");
+            },
+            activeUser: {
+                id: this.userApi.id,
+                sessionId: this.userApi.sessionId
+            }
+        };
 
         let url = Globals.globals.url + "appointment/" + this.appointment.id;
         // let url = "http://localhost:8000/api/appointment/" + this.appointment.id;
-
-        this.http.put(url, JSON.stringify(this.appointment), {headers: headers})
+        console.log(url);
+        this.http.put(url, JSON.stringify(this.apiRequestData), {headers: headers})
             .subscribe(res => {
                 console.log('res', res.json());
                 //TODO: refresh page after pop
-                this.navCtrl.pop();
+                this.navCtrl.setRoot(AppointmentsPage);
             }, (err) => {
                 console.log('err', err);
                 console.log(err._body);

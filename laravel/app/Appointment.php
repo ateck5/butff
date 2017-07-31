@@ -24,4 +24,8 @@ class Appointment extends Model
         'timeEnd',
         'year'
     ];
+
+    public function users() {
+        return $this->belongsToMany('User', 'appointments_users', 'user_id', 'appointment_id')->withPivot( 'year')->withTimestamps();
+    }
 }

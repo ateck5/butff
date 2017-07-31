@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Appointment;
+use App\Accommodation;
 
 class User extends Authenticatable
 {
@@ -42,4 +44,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function appointments() {
+        return $this->belongsToMany('App\Appointment', 'appointments_users', 'appointment_id', 'user_id')->withPivot( 'year')->withTimestamps();
+    }
+
+    public function accommodations() {
+        return $this->belongsToMany('App\Accommodation', 'accommodations_users', 'accommodation_id', 'user_id')->withPivot('price', 'dateArrival', 'dateDepartment', 'year')->withTimestamps();
+    }
 }

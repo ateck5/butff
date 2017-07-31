@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Http, Headers} from "@angular/http";
 import * as Globals from "../../../globals/globals"
 import {LoginPage} from "../../auth/login/login";
+import {AccommodationsPage} from "../accommodations/accommodations";
 
 /**
  * Generated class for the EditAccommodationUserPage page.
@@ -39,8 +40,11 @@ class myHTTPService {
 export class EditAccommodationUserPage {
     private accommodationUserForm: FormGroup;
     accommodationUser;
+    apiRequestData;
+    userApi;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private http: Http, private myService: myHTTPService) {
+        this.userApi = JSON.parse(localStorage.getItem("currentUser"));
         this.navParams.get("accommodationUser");
         this.accommodationUser = {
             id: this.navParams.data.accommodationUser.id,
@@ -79,14 +83,26 @@ export class EditAccommodationUserPage {
         this.accommodationUser.dateArrival = this.accommodationUserForm.value.dateArrival.replace("T", " ").replace("Z", "");
         this.accommodationUser.dateDepartment = this.accommodationUserForm.value.dateDepartment.replace("T", " ").replace("Z", "");
 
+        this.apiRequestData = {
+            accommodation: {
+                price: this.accommodationUserForm.value.price,
+                dateArrival: this.accommodationUserForm.value.dateArrival.replace("T", " ").replace("Z", ""),
+                dateDepartment: this.accommodationUserForm.value.dateDepartment.replace("T", " ").replace("Z", "")
+            },
+            activeUser: {
+                id: this.userApi.id,
+                sessionId: this.userApi.sessionId
+            }
+        };
+
         let url = Globals.globals.url + "accommodationUser/" + this.accommodationUser.id;
         // let url = "http://localhost:8000/api/accommodationUser/" + this.accommodationUser.id;
 
-        this.http.put(url, JSON.stringify(this.accommodationUser), {headers: headers})
+        this.http.put(url, JSON.stringify(this.apiRequestData), {headers: headers})
             .subscribe(res => {
                 console.log('res', res.json());
                 //TODO: refresh page after pop
-                this.navCtrl.pop();
+                this.navCtrl.setRoot(AccommodationsPage);
             }, (err) => {
                 console.log('err', err);
                 console.log(err._body);

@@ -19,6 +19,7 @@ import {EditAppointmentPage} from "../pages/appointment/edit-appointment/edit-ap
 import {EditAccommodationUserPage} from "../pages/accommodation/edit-accommodation-user/edit-accommodation-user";
 import {CreateUserPage} from "../pages/user/create-user/create-user";
 import {EditUserPasswordPage} from "../pages/user/edit-user-password/edit-user-password";
+import {AccommodationsListPage} from "../pages/accommodation/accommodations-list/accommodations-list";
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import {EditUserPasswordPage} from "../pages/user/edit-user-password/edit-user-p
         UserDetailsPage,
         AppointmentsPage,
         AccommodationsPage,
+        AccommodationsListPage,
         LoginPage,
         LogoutPage,
         EditUserPage,
@@ -50,6 +52,7 @@ import {EditUserPasswordPage} from "../pages/user/edit-user-password/edit-user-p
         UserDetailsPage,
         AppointmentsPage,
         AccommodationsPage,
+        AccommodationsListPage,
         LoginPage,
         LogoutPage,
         EditUserPage,

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AccommodationsUsers;
+use App\User;
 use Illuminate\Http\Request;
 
 class AccommodationUserController extends Controller
@@ -41,7 +42,7 @@ class AccommodationUserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified resource based on user_id.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -73,15 +74,19 @@ class AccommodationUserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $activeUser = User::findOrFail($request['activeUser']['id']);
+        $sessionId = $request['activeUser']['sessionId'];
+        if ($sessionId !== $activeUser['sessionId']) {
+            return response()->json("Error: Credentials did not match", 403);
+        }
         $accommodationUser = AccommodationsUsers::findOrFail($id);
 
-        $data = $request->all();
         //TODO: add updated timestamp
 
         //TODO: fix datetime format
-        $accommodationUser->price = number_format(floatval($data['price']), 2, '.', '');
-        $accommodationUser->dateArrival = $data['dateArrival'];
-        $accommodationUser->dateDepartment = $data['dateDepartment'];
+        $accommodationUser->price = number_format(floatval($request['accommodation']['price']), 2, '.', '');
+        $accommodationUser->dateArrival = $request['accommodation']['dateArrival'];
+        $accommodationUser->dateDepartment = $request['accommodation']['dateDepartment'];
 
         $accommodationUser->update();
 

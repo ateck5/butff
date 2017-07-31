@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Accommodation;
+use App\User;
 use Illuminate\Http\Request;
+use mysqli;
 
 class AccommodationController extends Controller
 {
@@ -12,10 +14,9 @@ class AccommodationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $accommodations[] = Accommodation::all();
-
+        $accommodations = Accommodation::all();
         return response()->json($accommodations, 200);
     }
 

@@ -16,15 +16,9 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        $users = User::with('accommodations', 'appointments')->get();
 
-        $activeUser = User::findOrFail($request['activeUser']['id']);
-        $sessionId = $request['activeUser']['sessionId'];
-        if ($sessionId !== $activeUser['sessionId']) {
-            return response()->json("Error: Credentials did not match", 403);
-        }
-        $users[] = User::all();
-
-        return response()->json($users, 200);
+        return response()->json([$users], 200);
     }
 
     /**
@@ -94,14 +88,14 @@ class UserController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id)
+    public function show($id)
     {
 
-        $activeUser = User::findOrFail($request['activeUser']['id']);
-        $sessionId = $request['activeUser']['sessionId'];
-        if ($sessionId !== $activeUser['sessionId']) {
-            return response()->json("Error: Credentials did not match", 403);
-        }
+//        $activeUser = User::findOrFail($request['activeUser']['id']);
+//        $sessionId = $request['activeUser']['sessionId'];
+//        if ($sessionId !== $activeUser['sessionId']) {
+//            return response()->json("Error: Credentials did not match", 403);
+//        }
 
         $user = User::findOrFail($id);
 

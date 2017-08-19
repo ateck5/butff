@@ -59,14 +59,14 @@ export class AppointmentsPage {
         this.user.lastname = userApi.lastname;
         this.user.email = userApi.email;
         this.user.phone = userApi.phone;
-        this.user.phoneCountry = userApi.phoneCountry;
+        this.user.phoneCountrycode = userApi.phoneCountrycode;
         this.user.nickname = userApi.nickname;
         this.user.country = userApi.country;
         this.user.city = userApi.city;
         this.user.street = userApi.street;
         this.user.streetNumber = userApi.streetNumber;
         this.user.postcode = userApi.postcode;
-        this.user.discount = userApi.discount;
+        this.user.discountTotal = userApi.discountTotal;
         this.user.discountDescription = userApi.discountDescription;
 
         this.getAppointmentsUser();

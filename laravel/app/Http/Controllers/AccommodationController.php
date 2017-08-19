@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Accommodation;
 use App\User;
 use Illuminate\Http\Request;
-use mysqli;
 
 class AccommodationController extends Controller
 {
@@ -16,7 +15,7 @@ class AccommodationController extends Controller
      */
     public function index(Request $request)
     {
-        $accommodations = Accommodation::all();
+        $accommodations = Accommodation::with('users')->get();
         return response()->json($accommodations, 200);
     }
 
@@ -38,7 +37,36 @@ class AccommodationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $activeUser = User::findOrFail($request['activeUser']['id']);
+        $sessionId = $request['activeUser']['sessionId'];
+        if ($sessionId !== $activeUser['sessionId']) {
+            return response()->json("Error: Credentials did not match", 403);
+        }
+
+        $accommodationObject = new Accommodation();
+        $accommodationObject->name = $request['newAccommodation']['name'];
+        $accommodationObject->email = $request['newAccommodation']['email'];
+        $accommodationObject->country = $request['newAccommodation']['country'];
+        $accommodationObject->city = $request['newAccommodation']['city'];
+        $accommodationObject->street = $request['newAccommodation']['street'];
+        $accommodationObject->streetNumber = $request['newAccommodation']['streetNumber'];
+        $accommodationObject->postcode = $request['newAccommodation']['postcode'];
+        $accommodationObject->phone = $request['newAccommodation']['phone'];
+        $accommodationObject->phoneCountryCode = $request['newAccommodation']['phoneCountrycode'];
+
+        try {
+            $accommodationObject->save();
+        } catch (\Illuminate\Database\QueryException $e) {
+            $errorCode = $e->errorInfo[1];
+            if ($errorCode == 1062) {
+                return response()->json("Error: Item already exists in the database", 400);
+                // houston, we have a duplicate entry problem
+            }
+            return response()->json(["Something went wrong", $e, $request->all()], 503);
+        }
+
+
+        return response()->json([$accommodationObject, $request->all()], 200);
     }
 
     /**
@@ -74,7 +102,27 @@ class AccommodationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $activeUser = User::findOrFail($request['activeUser']['id']);
+        $sessionId = $request['activeUser']['sessionId'];
+        if ($sessionId !== $activeUser['sessionId']) {
+            return response()->json("Error: Credentials did not match", 403);
+        }
+        $accommodation = Accommodation::findOrFail($id);
+//        return response()->json($accommodation, 200);
+
+        $accommodation->name = $request['accommodation']['name'];
+        $accommodation->email = $request['accommodation']['email'];
+        $accommodation->country = $request['accommodation']['country'];
+        $accommodation->city = $request['accommodation']['city'];
+        $accommodation->street = $request['accommodation']['street'];
+        $accommodation->streetNumber = $request['accommodation']['streetNumber'];
+        $accommodation->postcode = $request['accommodation']['postcode'];
+        $accommodation->phone = $request['accommodation']['phone'];
+        $accommodation->phoneCountrycode = $request['accommodation']['phoneCountrycode'];
+
+        $accommodation->update();
+
+        return response()->json($accommodation, 200);
     }
 
     /**

@@ -36,7 +36,7 @@ class myHTTPService {
 })
 export class AccommodationsPage {
 
-    accommodations: Array<{ id: number, name: string, email: string, country: string, city: string, street: string, streetNumber?: string, postcode: string, phone: string, phoneCountry?: string, price?: string, dateArrival: any, dateDepartment: any }>;
+    accommodations: Array<{ id: number, name: string, email: string, country: string, city: string, street: string, streetNumber?: string, postcode: string, phone: string, phoneCountrycode?: string, price?: string, dateArrival: any, dateDepartment: any }>;
     user: Globals.user;
     accommodationsUser;
     ready: boolean = false;
@@ -55,14 +55,14 @@ export class AccommodationsPage {
         this.user.lastname = userApi.lastname;
         this.user.email = userApi.email;
         this.user.phone = userApi.phone;
-        this.user.phoneCountry = userApi.phoneCountry;
+        this.user.phoneCountrycode = userApi.phoneCountrycode;
         this.user.nickname = userApi.nickname;
         this.user.country = userApi.country;
         this.user.city = userApi.city;
         this.user.street = userApi.street;
         this.user.streetNumber = userApi.streetNumber;
         this.user.postcode = userApi.postcode;
-        this.user.discount = userApi.discount;
+        this.user.discountTotal = userApi.discountTotal;
         this.user.discountDescription = userApi.discountDescription;
 
         let url = Globals.globals.url + "user/" + this.user.id;
@@ -111,7 +111,7 @@ export class AccommodationsPage {
                         streetNumber: result.streetNumber,
                         postcode: result.postcode,
                         phone: result.phone,
-                        phoneCountry: result.phoneCountrycode,
+                        phoneCountrycode: result.phoneCountrycode,
                         price: this.accommodationsUser[accommodationUser].price,
                         dateArrival: this.accommodationsUser[accommodationUser].dateArrival,
                         dateDepartment: this.accommodationsUser[accommodationUser].dateDepartment

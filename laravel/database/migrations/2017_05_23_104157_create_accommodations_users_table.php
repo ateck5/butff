@@ -21,10 +21,12 @@ class CreateAccommodationsUsersTable extends Migration
                 $table->integer('user_id')->unsigned();
                 $table->float('price')->nullable();
                 $table->dateTime('dateArrival');
-                $table->dateTime('dateDepartment');
+                $table->dateTime('dateDepartment')->nullable();
+                $table->string('description', 191)->nullable();
+                $table->string('roomnumber', 191)->nullable();
                 $table->foreign('accommodation_id')->references('id')->on('accommodations')->onDelete('cascade');
                 $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-                $table->string('year',191);
+                $table->string('year',191)->nullable();
                 $table->timestamps();
 
             });

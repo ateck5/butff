@@ -1,0 +1,103 @@
+<!--
+  Generated template for the AppointmentsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Appointments List</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-list>
+        <ion-list *ngFor="let appointment of appointmentsList;">
+            <ion-list-header color="primary">
+                <h2>{{appointment.name + " " + appointment.type}}</h2>
+                <button ion-button clear item-right large>
+                    <ion-icon id="iconEdit{{appointment.id}}" name="create" class="hidden white"
+                              (click)="editAppointmentPage(appointment)"></ion-icon>
+                </button>
+                <button ion-button clear item-right large>
+                    <ion-icon id="iconArrow{{appointment.id}}" name="arrow-dropright" class="white"
+                              (click)="toggleActive(appointment.id)"></ion-icon>
+                </button>
+            </ion-list-header>
+            <ion-list id="item{{appointment.id}}" class="hidden">
+
+                <ion-item>
+                    {{appointment.description}}
+                    <p item-right class="blue">
+                        description
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="appointment.country">
+                    {{appointment.country}}
+                    <p item-right class="blue">
+                        country
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="appointment.city">
+                    {{appointment.city}}
+                    <p item-right class="blue">
+                        city
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="appointment.street">
+                    {{appointment.street}} {{appointment.streetNumber !== undefined ? appointment.streetNumber: ""}}
+                    <p item-right class="blue">
+                        street
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="appointment.postcode">
+                    {{appointment.postcode}}
+                    <p item-right class="blue">
+                        postcode
+                    </p>
+                </ion-item>
+                <ion-item>
+                    {{appointment.timeStart}}
+                    <p item-right class="blue">
+                        time start
+                    </p>
+                </ion-item>
+                <ion-item>
+                    {{appointment.timeStart}}
+                    <p item-right class="blue">
+                        Time end
+                    </p>
+                </ion-item>
+
+                <ng-container *ngIf="appointment.users.length > 0">
+                    <ion-item-divider>
+                        Appointment Users
+                    </ion-item-divider>
+                    <br/>
+                    <ion-list *ngFor="let user of appointment.users">
+                        <ion-list-header color="secondary">
+                            <h2>{{user.id + " " + user.firstname + " " + user.lastname}}</h2>
+                            <button ion-button clear item-right large>
+                                <ion-icon id="iconEdit{{appointment.id}}_{{user.id}}" name="create" class="white"
+                                          (click)="editAppointmentUserPage(appointment, user)"></ion-icon>
+                            </button>
+                        </ion-list-header>
+
+                        <!---->
+                        <!--{{user.id}}-->
+                        <!--{{user.firstname}}{{user.lastname}}-->
+                        <!--{{user.pivot.price}}-->
+                    </ion-list>
+
+                </ng-container>
+
+            </ion-list>
+        </ion-list>
+    </ion-list>
+</ion-content>

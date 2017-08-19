@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Appointment;
 use App\AppointmentsUsers;
 use Illuminate\Http\Request;
@@ -38,7 +39,30 @@ class AppointmentUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $activeUser = User::findOrFail($request['activeUser']['id']);
+        $sessionId = $request['activeUser']['sessionId'];
+        if ($sessionId !== $activeUser['sessionId']) {
+            return response()->json("Error: Credentials did not match", 403);
+        }
+
+        $appointmentUserObject = new AppointmentsUsers();
+        $appointmentUserObject->user_id = $request['newAppointmentUser']['user'];
+        $appointmentUserObject->appointment_id = $request['newAppointmentUser']['appointment'];
+        $appointmentUserObject->year = date("Y");
+
+        try {
+            $appointmentUserObject->save();
+        } catch (\Illuminate\Database\QueryException $e) {
+            $errorCode = $e->errorInfo[1];
+            if ($errorCode == 1062) {
+                return response()->json("Error: Item already exists in the database", 400);
+                // houston, we have a duplicate entry problem
+            }
+            return response()->json(["Something went wrong", $e, $request->all()], 503);
+        }
+
+
+        return response()->json([$appointmentUserObject, $request->all()], 200);
     }
 
     /**

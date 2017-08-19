@@ -1,0 +1,149 @@
+<!--
+  Generated template for the UsersPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Users List</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-list>
+        <ion-list *ngFor="let user of userList;">
+            <ion-list-header color="primary">
+                <h2>{{user.firstname + " " + user.lastname}}</h2>
+                <button ion-button clear item-right large>
+                    <ion-icon id="iconEdit{{user.id}}" name="create" class="hidden white"
+                              (click)="editUserPage(user)"></ion-icon>
+                </button>
+                <button ion-button clear item-right large>
+                    <ion-icon id="iconArrow{{user.id}}" name="arrow-dropright" class="white"
+                              (click)="toggleActive(user.id)"></ion-icon>
+                </button>
+            </ion-list-header>
+            <ion-list id="item{{user.id}}" class="hidden">
+
+                <ion-item>
+                    {{user.username}}
+                    <p item-right class="blue">
+                        username
+                    </p>
+                </ion-item>
+                <ion-item>
+                    {{user.nickname}}
+                    <p item-right class="blue">
+                        nickname
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="user.country">
+                    {{user.country}}
+                    <p item-right class="blue">
+                        country
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="user.city">
+                    {{user.city}}
+                    <p item-right class="blue">
+                        city
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="user.street">
+                    {{user.street}} {{user.streetNumber !== undefined ? user.streetNumber: ""}}
+                    <p item-right class="blue">
+                        street
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="user.postcode">
+                    {{user.postcode}}
+                    <p item-right class="blue">
+                        postcode
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="user.phone">
+                    {{user.phoneCountrycode !== undefined ? "+ " + user.phoneCountrycode: "" }}
+                    {{user.phone}}
+                    <p item-right class="blue">
+                        phone
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="user.discountTotal">
+                    € {{user.discountTotal}}
+                    <p item-right class="blue">
+                        discount Total
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="user.discountDescription">
+                    {{user.discountDescription}}
+                    <p item-right class="blue">
+                        discount description
+                    </p>
+                </ion-item>
+
+                <ng-container *ngIf="user.appointments.length > 0">
+                    <ion-item-divider>
+                         User Appointments
+                    </ion-item-divider>
+                    <br/>
+                    <ion-list *ngFor="let appointment of user.appointments">
+                        <ion-list-header color="secondary">
+                            <h2>{{appointment.id + " " + appointment.name + " " + appointment.type}}</h2>
+                            <button ion-button clear item-right large>
+                                <ion-icon id="iconEdit{{appointment.id}}_{{user.id}}" name="create" class="white"
+                                          (click)="editAppointmentUserPage(appointment, user)"></ion-icon>
+                            </button>
+                        </ion-list-header>
+                    </ion-list>
+                </ng-container>
+
+                <ng-container *ngIf="user.accommodations.length > 0">
+                    <ion-item-divider>
+                        User Accommodations
+                    </ion-item-divider>
+                    <br/>
+                    <ion-list *ngFor="let accommodation of user.accommodations">
+                        <ion-list-header color="secondary">
+                            <h2>{{accommodation.id + " " + accommodation.name}}</h2>
+                            <button ion-button clear item-right large>
+                                <ion-icon id="iconEdit{{accommodation.id}}_{{user.id}}" name="create" class="hidden white" (click)="editAccommodationUserPage(accommodation, user)"></ion-icon>
+                            </button>
+                            <button ion-button clear item-right large>
+                                <ion-icon id="iconArrow{{accommodation.id + '_' + user.id}}" name="arrow-dropright" class="white" (click)="toggleActive(accommodation.id.toString()+'_'+user.id.toString())"></ion-icon>
+                            </button>
+                        </ion-list-header>
+                        <ion-list id="item{{accommodation.id+'_'+user.id}}" class="hidden">
+                            <!--<ion-list id="item{{accommodation.id+'_'+user.id}}" >-->
+                            <ion-item *ngIf="accommodation.pivot.price">
+                                € {{accommodation.pivot.price}}
+                                <p item-right class="blue">
+                                    price
+                                </p>
+                            </ion-item>
+                            <ion-item>
+                                {{accommodation.pivot.dateArrival}}
+                                <p item-right class="blue">
+                                    date arrival
+                                </p>
+                            </ion-item>
+                            <ion-item>
+                                {{accommodation.pivot.dateDepartment}}
+                                <p item-right class="blue">
+                                    date department
+                                </p>
+                            </ion-item>
+                        </ion-list>
+                    </ion-list>
+                </ng-container>
+
+            </ion-list>
+        </ion-list>
+    </ion-list>
+</ion-content>

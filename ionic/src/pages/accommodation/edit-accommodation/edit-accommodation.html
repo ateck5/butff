@@ -6,13 +6,63 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>editAccommodation</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Edit Accommodation</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+    <form [formGroup]="accommodationForm" (ngSubmit)="logForm()">
+        <ion-item>
+            <ion-label>name</ion-label>
+            <ion-input type="text" formControlName="name"></ion-input>
+        </ion-item>
 
+        <ion-item>
+            <ion-label>email</ion-label>
+            <ion-input type="text" formControlName="email"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>country</ion-label>
+            <ion-input type="text" formControlName="country"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>city</ion-label>
+            <ion-input type="text" formControlName="city"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>street</ion-label>
+            <ion-input type="text" formControlName="street"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>street number</ion-label>
+            <ion-input type="text" formControlName="streetNumber"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>postcode</ion-label>
+            <ion-input type="text" formControlName="postcode"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>phone</ion-label>
+            <ion-input type="text" formControlName="phone"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>phone countrycode</ion-label>
+            <ion-input type="text" formControlName="phoneCountrycode"></ion-input>
+        </ion-item>
+
+        <button ion-button type="submit" [disabled]="!accommodationForm.valid">Submit</button>
+    </form>
 </ion-content>

@@ -21,7 +21,7 @@ class CreateAppointmentsUsersTable extends Migration
                 $table->integer('user_id')->unsigned();
                 $table->foreign('appointment_id')->references('id')->on('appointments')->onDelete('cascade');
                 $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-                $table->string('year',191);
+                $table->string('year',191)->nullable();
                 $table->timestamps();
 
             });

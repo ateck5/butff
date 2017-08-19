@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Appointment;
 use App\User;
+use Faker\Provider\DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
@@ -16,7 +17,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        $appointments[] = Appointments::all();
+        $appointments = Appointment::with('users')->get();
 
         return response()->json($appointments, 200);
     }
@@ -24,7 +25,7 @@ class AppointmentController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Respons e
      */
     public function create()
     {
@@ -39,7 +40,38 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $activeUser = User::findOrFail($request['activeUser']['id']);
+        $sessionId = $request['activeUser']['sessionId'];
+        if ($sessionId !== $activeUser['sessionId']) {
+            return response()->json("Error: Credentials did not match", 403);
+        }
+
+        $appointmentObject = new Appointment();
+        $appointmentObject->name = $request['newAppointment']['name'];
+        $appointmentObject->type = $request['newAppointment']['type'];
+        $appointmentObject->description = $request['newAppointment']['description'];
+        $appointmentObject->country = $request['newAppointment']['country'];
+        $appointmentObject->city = $request['newAppointment']['city'];
+        $appointmentObject->street = $request['newAppointment']['street'];
+        $appointmentObject->streetNumber = $request['newAppointment']['streetNumber'];
+        $appointmentObject->postcode = $request['newAppointment']['postcode'];
+        $appointmentObject->timeStart = $request['newAppointment']['timeStart'];
+        $appointmentObject->timeEnd = $request['newAppointment']['timeEnd'];
+        $appointmentObject->year = date("Y");
+
+        try {
+            $appointmentObject->save();
+        } catch (\Illuminate\Database\QueryException $e) {
+            $errorCode = $e->errorInfo[1];
+            if ($errorCode == 1062) {
+                return response()->json("Error: Item already exists in the database", 400);
+                // houston, we have a duplicate entry problem
+            }
+            return response()->json(["Something went wrong", $e, $request->all()], 503);
+        }
+
+
+        return response()->json([$appointmentObject, $request->all()], 200);
     }
 
     /**

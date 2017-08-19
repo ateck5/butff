@@ -1,0 +1,51 @@
+<!--
+  Generated template for the CreateUserPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Link User to Accommodation</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <form [formGroup]="accommodationUserForm" (ngSubmit)="logForm()">
+        <ion-item>
+            <ion-label>User</ion-label>
+            <ion-select formControlName="user">
+                <ion-option *ngFor="let user of usersList" [value]="user.id">{{user.id.toString() + " " + user.firstname + " " + user.lastname}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label>Accommodation</ion-label>
+            <ion-select formControlName="accommodation">
+                <ion-option *ngFor="let accommodation of accommodationsList" [value]="accommodation.id">{{accommodation.id.toString() + " " + accommodation.name}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label>Price</ion-label>
+            <ion-input type="text" formControlName="price"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Date Arrival</ion-label>
+            <ion-datetime displayFormat="YYYY-MM-DD HH:mm:ss" formControlName="dateArrival"></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <ion-label>Date Department</ion-label>
+            <ion-datetime displayFormat="YYYY-MM-DD HH:mm:ss" formControlName="dateDepartment"></ion-datetime>    </ion-item>
+
+        <ion-item *ngIf="messageString" text-wrap>
+            {{messageString}}
+        </ion-item>
+        <button ion-button type="submit" [disabled]="!accommodationUserForm.valid">Submit</button>
+
+    </form>
+</ion-content>

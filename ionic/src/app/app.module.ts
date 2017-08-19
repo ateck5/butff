@@ -17,9 +17,17 @@ import {LoginPage} from "../pages/auth/login/login";
 import {EditUserPage} from "../pages/user/edit-user/edit-user";
 import {EditAppointmentPage} from "../pages/appointment/edit-appointment/edit-appointment";
 import {EditAccommodationUserPage} from "../pages/accommodation/edit-accommodation-user/edit-accommodation-user";
+import {EditAppointmentUserPage} from "../pages/appointment/edit-appointment-user/edit-appointment-user";
+import {AppointmentsListPage} from "../pages/appointment/appointments-list/appointments-list";
 import {CreateUserPage} from "../pages/user/create-user/create-user";
+import {CreateAppointmentPage} from "../pages/appointment/create-appointment/create-appointment";
+import {CreateAccommodationPage} from "../pages/accommodation/create-accommodation/create-accommodation";
+import {CreateAppointmentUserPage} from "../pages/appointment/create-appointment-user/create-appointment-user";
+import {CreateAccommodationUserPage} from "../pages/accommodation/create-accommodation-user/create-accommodation-user";
 import {EditUserPasswordPage} from "../pages/user/edit-user-password/edit-user-password";
 import {AccommodationsListPage} from "../pages/accommodation/accommodations-list/accommodations-list";
+import {EditAccommodationPage} from "../pages/accommodation/edit-accommodation/edit-accommodation";
+import {UserListPage} from "../pages/user/user-list/user-list";
 
 @NgModule({
     declarations: [
@@ -27,15 +35,23 @@ import {AccommodationsListPage} from "../pages/accommodation/accommodations-list
         HomePage,
         ListPage,
         UserDetailsPage,
+        UserListPage,
         AppointmentsPage,
         AccommodationsPage,
         AccommodationsListPage,
+        EditAccommodationPage,
+        EditAccommodationUserPage,
         LoginPage,
         LogoutPage,
         EditUserPage,
         EditUserPasswordPage,
+        AppointmentsListPage,
         EditAppointmentPage,
-        EditAccommodationUserPage,
+        EditAppointmentUserPage,
+        CreateAppointmentPage,
+        CreateAppointmentUserPage,
+        CreateAccommodationUserPage,
+        CreateAccommodationPage,
         CreateUserPage,
 
     ],
@@ -50,15 +66,23 @@ import {AccommodationsListPage} from "../pages/accommodation/accommodations-list
         HomePage,
         ListPage,
         UserDetailsPage,
+        UserListPage,
         AppointmentsPage,
         AccommodationsPage,
         AccommodationsListPage,
+        EditAccommodationPage,
+        EditAccommodationUserPage,
         LoginPage,
         LogoutPage,
         EditUserPage,
         EditUserPasswordPage,
+        AppointmentsListPage,
         EditAppointmentPage,
-        EditAccommodationUserPage,
+        EditAppointmentUserPage,
+        CreateAppointmentPage,
+        CreateAppointmentUserPage,
+        CreateAccommodationUserPage,
+        CreateAccommodationPage,
         CreateUserPage,
 
     ],

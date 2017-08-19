@@ -1,0 +1,68 @@
+<!--
+  Generated template for the CreateUserPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Create Appointment</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <form [formGroup]="appointmentForm" (ngSubmit)="logForm()">
+        <ion-item>
+            <ion-label>Name</ion-label>
+            <ion-input type="text" formControlName="name"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Type</ion-label>
+            <ion-input type="text" formControlName="type"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Description</ion-label>
+            <ion-input type="text" formControlName="description"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Country</ion-label>
+            <ion-input type="text" formControlName="country"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>City</ion-label>
+            <ion-input type="text" formControlName="city"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Street</ion-label>
+            <ion-input type="text" formControlName="street"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Streetnumber</ion-label>
+            <ion-input type="text" formControlName="streetNumber"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Postcode</ion-label>
+            <ion-input type="text" formControlName="postcode"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Starting time</ion-label>
+            <ion-datetime displayFormat="YYYY-MM-DD HH:mm:ss" formControlName="timeStart"></ion-datetime>
+
+        </ion-item>
+        <ion-item>
+            <ion-label>Ending time</ion-label>
+            <ion-datetime displayFormat="YYYY-MM-DD HH:mm:ss" formControlName="timeEnd"></ion-datetime>
+        </ion-item>
+        <ion-item *ngIf="messageString" text-wrap>
+            {{messageString}}
+        </ion-item>
+        <button ion-button type="submit" [disabled]="!appointmentForm.valid">Submit</button>
+
+    </form>
+</ion-content>

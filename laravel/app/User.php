@@ -46,10 +46,10 @@ class User extends Authenticatable
     ];
 
     public function appointments() {
-        return $this->belongsToMany('App\Appointment', 'appointments_users', 'appointment_id', 'user_id')->withPivot( 'year')->withTimestamps();
+        return $this->belongsToMany('App\Appointment', 'appointments_users', 'user_id', 'appointment_id')->withPivot( 'year', 'id')->withTimestamps();
     }
 
     public function accommodations() {
-        return $this->belongsToMany('App\Accommodation', 'accommodations_users', 'accommodation_id', 'user_id')->withPivot('price', 'dateArrival', 'dateDepartment', 'year')->withTimestamps();
+        return $this->belongsToMany('App\Accommodation', 'accommodations_users', 'user_id', 'accommodation_id')->withPivot('price', 'dateArrival', 'dateDepartment', 'year', 'id')->withTimestamps();
     }
 }

@@ -18,7 +18,7 @@ class UserController extends Controller
     {
         $users = User::with('accommodations', 'appointments')->get();
 
-        return response()->json([$users], 200);
+        return response()->json($users, 200);
     }
 
     /**
@@ -39,9 +39,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-//        return response()->json("store", 200);
-//        return response()->json($user, 200);
-
         $activeUser = User::findOrFail($request['activeUser']['id']);
         $sessionId = $request['activeUser']['sessionId'];
         if ($sessionId !== $activeUser['sessionId']) {
@@ -56,14 +53,14 @@ class UserController extends Controller
         $userObject->password = bcrypt($request['newUser']['password']);
         $userObject->email = $request['newUser']['email'];
         $userObject->phone = $request['newUser']['phone'];
-        $userObject->phoneCountrycode = $request['newUser']['phoneCountry'];
+        $userObject->phoneCountrycode = $request['newUser']['phoneCountrycode'];
         $userObject->nickname = $request['newUser']['nickname'];
         $userObject->country = $request['newUser']['country'];
         $userObject->city = $request['newUser']['city'];
         $userObject->street = $request['newUser']['street'];
         $userObject->streetNumber = $request['newUser']['streetNumber'];
         $userObject->postcode = $request['newUser']['postcode'];
-        $userObject->discountTotal = $request['newUser']['discount'];
+        $userObject->discountTotal = $request['newUser']['discountTotal'];
         $userObject->discountDescription = $request['newUser']['discountDescription'];
         $userObject->role_id = 4;
 
@@ -135,14 +132,14 @@ class UserController extends Controller
         $user->lastname = $request['user']['lastname'];
         $user->email = $request['user']['email'];
         $user->phone = $request['user']['phone'];
-        $user->phoneCountryCode = $request['user']['phoneCountry'];
+        $user->phoneCountryCode = $request['user']['phoneCountrycode'];
         $user->nickname = $request['user']['nickname'];
         $user->country = $request['user']['country'];
         $user->city = $request['user']['city'];
         $user->street = $request['user']['street'];
         $user->streetNumber = $request['user']['streetNumber'];
         $user->postcode = $request['user']['postcode'];
-        $user->discountTotal = $request['user']['discount'];
+        $user->discountTotal = $request['user']['discountTotal'];
         $user->discountDescription = $request['user']['discountDescription'];
         $user->update();
 

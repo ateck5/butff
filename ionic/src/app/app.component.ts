@@ -11,6 +11,12 @@ import {LogoutPage} from "../pages/auth/logout/logout";
 import {LoginPage} from "../pages/auth/login/login";
 import {CreateUserPage} from "../pages/user/create-user/create-user";
 import {AccommodationsListPage} from "../pages/accommodation/accommodations-list/accommodations-list";
+import {AppointmentsListPage} from "../pages/appointment/appointments-list/appointments-list";
+import {UserListPage} from "../pages/user/user-list/user-list";
+import {CreateAppointmentPage} from "../pages/appointment/create-appointment/create-appointment";
+import {CreateAccommodationPage} from "../pages/accommodation/create-accommodation/create-accommodation";
+import {CreateAppointmentUserPage} from "../pages/appointment/create-appointment-user/create-appointment-user";
+import {CreateAccommodationUserPage} from "../pages/accommodation/create-accommodation-user/create-accommodation-user";
 
 
 @Component({
@@ -30,8 +36,14 @@ export class MyApp {
         // used for an example of ngFor and navigation
         this.pages = [
             {title: 'Home', component: HomePage},
+            {title: 'User List', component: UserListPage},
+            {title: 'Appointments List', component: AppointmentsListPage},
             {title: 'Accommodations List', component: AccommodationsListPage},
             {title: 'Create User', component: CreateUserPage},
+            {title: 'Create Appointment', component: CreateAppointmentPage},
+            {title: 'Link Appointment User', component: CreateAppointmentUserPage},
+            {title: 'Create Accommodation', component: CreateAccommodationPage},
+            {title: 'Link Accommodation User', component: CreateAccommodationUserPage},
             {title: 'User Details', component: UserDetailsPage},
             {title: 'Appointments', component: AppointmentsPage},
             {title: 'Accommodations', component: AccommodationsPage},

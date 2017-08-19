@@ -5,9 +5,6 @@ import {Http, Headers} from "@angular/http";
 import {LoginPage} from "../../auth/login/login";
 import * as Globals from "../../../globals/globals"
 
-
-
-
 /**
  * Generated class for the CreateUserPage page.
  *
@@ -57,14 +54,14 @@ export class CreateUserPage {
             passwordRepeat: ['', Validators.required],
             email: ['', Validators.required],
             phone: ['', Validators.required],
-            phoneCountry: [''],
+            phoneCountrycode: [''],
             nickname: [''],
             country: [''],
             city: [''],
             street: [''],
             streetNumber: [''],
             postcode: [''],
-            discount: [''],
+            discountTotal: [''],
             discountDescription: ['']
         });
     }
@@ -95,14 +92,14 @@ export class CreateUserPage {
                 password: this.userForm.value.password,
                 email: this.userForm.value.email,
                 phone: this.userForm.value.phone,
-                phoneCountry: this.userForm.value.phoneCountry,
+                phoneCountrycode: this.userForm.value.phoneCountrycode,
                 nickname: this.userForm.value.nickname,
                 country: this.userForm.value.country,
                 city: this.userForm.value.city,
                 street: this.userForm.value.street,
                 streetNumber: this.userForm.value.streetNumber,
                 postcode: this.userForm.value.postcode,
-                discount: this.userForm.value.discount,
+                discountTotal: this.userForm.value.discountTotal,
                 discountDescription: this.userForm.value.discountDescription,
             },
             activeUser: {

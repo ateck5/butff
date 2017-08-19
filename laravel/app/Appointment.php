@@ -26,6 +26,6 @@ class Appointment extends Model
     ];
 
     public function users() {
-        return $this->belongsToMany('User', 'appointments_users', 'user_id', 'appointment_id')->withPivot( 'year')->withTimestamps();
+        return $this->belongsToMany('App\User', 'appointments_users', 'appointment_id', 'user_id')->withPivot( 'year', 'id')->withTimestamps();
     }
 }

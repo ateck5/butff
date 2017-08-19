@@ -4,7 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Http, Headers} from "@angular/http";
 import * as Globals from "../../../globals/globals"
 import {LoginPage} from "../../auth/login/login";
-import {AppointmentsPage} from "../appointments/appointments";
+import {AppointmentsListPage} from "../appointments-list/appointments-list";
 
 /**
  * Generated class for the EditAppointmentPage page.
@@ -116,8 +116,7 @@ export class EditAppointmentPage {
         this.http.put(url, JSON.stringify(this.apiRequestData), {headers: headers})
             .subscribe(res => {
                 console.log('res', res.json());
-                //TODO: refresh page after pop
-                this.navCtrl.setRoot(AppointmentsPage);
+                this.navCtrl.setRoot(AppointmentsListPage);
             }, (err) => {
                 console.log('err', err);
                 console.log(err._body);

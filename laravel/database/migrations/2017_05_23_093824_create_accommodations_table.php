@@ -17,14 +17,16 @@ class CreateAccommodationsTable extends Migration
             Schema::create('accommodations', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name', 191);
-                $table->string('email', 191);
-                $table->string('country', 191);
-                $table->string('city', 191);
-                $table->string('street', 191);
+                $table->string('email', 191)->nullable();
+                $table->string('country', 191)->nullable();
+                $table->string('city', 191)->nullable();
+                $table->string('street', 191)->nullable();
                 $table->string('streetNumber', 191)->nullable();
-                $table->string('postcode', 191);
-                $table->string('phone', 191);
+                $table->string('postcode', 191)->nullable();
+                $table->string('phone', 191)->nullable();
                 $table->string('phoneCountrycode', 191)->nullable();
+                $table->string('description', 191)->nullable();
+                $table->integer('maxRooms', false, false)->nullable();
                 $table->timestamps();
             });
         }

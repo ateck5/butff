@@ -74,10 +74,10 @@
                 Postcode
             </p>
         </ion-item>
-        <ion-item *ngIf="user.discount">
-            € {{user.discount}}
+        <ion-item *ngIf="user.discountTotal">
+            € {{user.discountTotal}}
             <p item-right class="blue">
-                Discount
+                Discount Total
             </p>
         </ion-item>
         <ion-item text-wrap *ngIf="user.discountDescription">

@@ -38,7 +38,33 @@ class AccommodationUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $activeUser = User::findOrFail($request['activeUser']['id']);
+        $sessionId = $request['activeUser']['sessionId'];
+        if ($sessionId !== $activeUser['sessionId']) {
+            return response()->json("Error: Credentials did not match", 403);
+        }
+
+        $accommodationUserObject = new AccommodationsUsers();
+        $accommodationUserObject->user_id = $request['newAccommodationUser']['user'];
+        $accommodationUserObject->accommodation_id = $request['newAccommodationUser']['accommodation'];
+        $accommodationUserObject->price = number_format(floatval($request['newAccommodationUser']['price']), 2, '.', '');
+        $accommodationUserObject->dateArrival = $request['newAccommodationUser']['dateArrival'];
+        $accommodationUserObject->dateDepartment = $request['newAccommodationUser']['dateDepartment'];
+        $accommodationUserObject->year = date("Y");
+
+        try {
+            $accommodationUserObject->save();
+        } catch (\Illuminate\Database\QueryException $e) {
+            $errorCode = $e->errorInfo[1];
+            if ($errorCode == 1062) {
+                return response()->json("Error: Item already exists in the database", 400);
+                // houston, we have a duplicate entry problem
+            }
+            return response()->json(["Something went wrong", $e, $request->all()], 503);
+        }
+
+
+        return response()->json([$accommodationUserObject, $request->all()], 200);
     }
 
     /**

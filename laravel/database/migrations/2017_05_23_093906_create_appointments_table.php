@@ -18,7 +18,7 @@ class CreateAppointmentsTable extends Migration
                 $table->increments('id');
                 $table->string('name', 191);
                 $table->string('type', 191);
-                $table->string('description', 191);
+                $table->string('description', 191)->nullable();
                 $table->string('country', 191)->nullable();
                 $table->string('city', 191)->nullable();
                 $table->string('street', 191)->nullable();

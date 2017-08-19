@@ -4,7 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Http, Headers} from "@angular/http";
 import * as Globals from "../../../globals/globals"
 import {LoginPage} from "../../auth/login/login";
-import {AccommodationsPage} from "../accommodations/accommodations";
+import {AccommodationsListPage} from "../accommodations-list/accommodations-list";
 
 /**
  * Generated class for the EditAccommodationUserPage page.
@@ -45,13 +45,30 @@ export class EditAccommodationUserPage {
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private http: Http, private myService: myHTTPService) {
         this.userApi = JSON.parse(localStorage.getItem("currentUser"));
-        this.navParams.get("accommodationUser");
-        this.accommodationUser = {
-            id: this.navParams.data.accommodationUser.id,
-            price: this.navParams.data.accommodationUser.price,
-            dateArrival:this.navParams.data.accommodationUser.dateArrival,
-            dateDepartment:this.navParams.data.accommodationUser.dateDepartment
-        };
+        // this.navParams.get("accommodationUser");
+        console.log(this.navParams.data.user);
+        console.log(this.navParams.data.accommodation);
+        if (this.navParams.data.accommodation.hasOwnProperty("pivot")){
+            this.accommodationUser = {
+                id: this.navParams.data.accommodation.pivot.id,
+                price: this.navParams.data.accommodation.pivot.price,
+                dateArrival:this.navParams.data.accommodation.pivot.dateArrival,
+                dateDepartment:this.navParams.data.accommodation.pivot.dateDepartment
+            };
+        }else if (this.navParams.data.user.hasOwnProperty("pivot")){
+            this.accommodationUser = {
+                id: this.navParams.data.user.pivot.id,
+                price: this.navParams.data.user.pivot.price,
+                dateArrival:this.navParams.data.user.pivot.dateArrival,
+                dateDepartment:this.navParams.data.user.pivot.dateDepartment
+            };
+        }
+        // this.accommodationUser = {
+        //     id: this.navParams.data.user.pivot.id,
+        //     price: this.navParams.data.user.pivot.price,
+        //     dateArrival:this.navParams.data.user.pivot.dateArrival,
+        //     dateDepartment:this.navParams.data.user.pivot.dateDepartment
+        // };
 
         //change database datetime format to form datetime format
         let dateArrival = this.accommodationUser.dateArrival.replace(" ", "T") + "Z";
@@ -78,10 +95,10 @@ export class EditAccommodationUserPage {
         headers.append('Content-Type', 'application/json');
 
 
-        this.accommodationUser.price = this.accommodationUserForm.value.price;
-        //change form datetime format to database datetime format
-        this.accommodationUser.dateArrival = this.accommodationUserForm.value.dateArrival.replace("T", " ").replace("Z", "");
-        this.accommodationUser.dateDepartment = this.accommodationUserForm.value.dateDepartment.replace("T", " ").replace("Z", "");
+        // this.accommodationUser.price = this.accommodationUserForm.value.price;
+        // //change form datetime format to database datetime format
+        // this.accommodationUser.dateArrival = this.accommodationUserForm.value.dateArrival.replace("T", " ").replace("Z", "");
+        // this.accommodationUser.dateDepartment = this.accommodationUserForm.value.dateDepartment.replace("T", " ").replace("Z", "");
 
         this.apiRequestData = {
             accommodation: {
@@ -101,8 +118,7 @@ export class EditAccommodationUserPage {
         this.http.put(url, JSON.stringify(this.apiRequestData), {headers: headers})
             .subscribe(res => {
                 console.log('res', res.json());
-                //TODO: refresh page after pop
-                this.navCtrl.setRoot(AccommodationsPage);
+                this.navCtrl.setRoot(AccommodationsListPage);
             }, (err) => {
                 console.log('err', err);
                 console.log(err._body);

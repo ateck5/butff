@@ -9,7 +9,7 @@ export class user {
     lastname: string;
     email: string;
     phone: string;
-    phoneCountry?: string;
+    phoneCountrycode?: string;
     nickname?: string;
     country?: string;
     city?: string;
@@ -17,6 +17,6 @@ export class user {
     streetNumber?: string;
     postcode?: string;
     sessionId?: string;
-    discount?: string;
+    discountTotal?: string;
     discountDescription?: string;
 }

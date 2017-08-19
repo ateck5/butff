@@ -4,6 +4,7 @@ import {Http} from "@angular/http";
 import {EditAccommodationUserPage} from "../edit-accommodation-user/edit-accommodation-user";
 import * as Globals from "../../../globals/globals";
 import {LoginPage} from "../../auth/login/login";
+import {EditAccommodationPage} from "../edit-accommodation/edit-accommodation";
 /**
  * Generated class for the AccommodationsPage page.
  *
@@ -47,16 +48,11 @@ export class AccommodationsListPage {
         this.http.get(url)
             .subscribe(res => {
                 this.accommodationsList = res.json();
-                this.getAccommodationsUsers();
                 this.ready = true;
             }, (err) => {
                 console.log('err', err);
                 console.log(err._body);
             });
-
-    }
-
-    private getAccommodationsUsers(){
 
     }
 
@@ -115,36 +111,70 @@ export class AccommodationsListPage {
         }
     }
 
+    // toggleActive(id) {
+    //     //carousel function
+    //     if (this.ready) {
+    //         //close all carousel items
+    //         let isActive = document.getElementById("item" + id.toString()).classList.contains('active');
+    //         for (let item in this.accommodationsList) {
+    //             // console.log(this.accommodationsList, id);
+    //             document.getElementById("item" + this.accommodationsList[item].id.toString()).classList.remove("active");
+    //             document.getElementById("item" + this.accommodationsList[item].id.toString()).classList.add("hidden");
+    //             document.getElementById("iconArrow" + this.accommodationsList[item].id.toString()).classList.remove("ion-md-arrow-dropdown");
+    //             document.getElementById("iconArrow" + this.accommodationsList[item].id.toString()).classList.add("ion-md-arrow-dropright");
+    //             document.getElementById("iconEdit" + this.accommodationsList[item].id.toString()).classList.remove("active");
+    //             document.getElementById("iconEdit" + this.accommodationsList[item].id.toString()).classList.add("hidden");
+    //         }
+    //         if (!isActive) {
+    //             //open active carousel item
+    //             document.getElementById("item" + id.toString()).classList.remove("hidden");
+    //             document.getElementById("item" + id.toString()).classList.add("active");
+    //             document.getElementById("iconArrow" + id.toString()).classList.remove("ion-md-arrow-dropright");
+    //             document.getElementById("iconArrow" + id.toString()).classList.add("ion-md-arrow-dropdown");
+    //             document.getElementById("iconEdit" + id.toString()).classList.remove("hidden");
+    //             document.getElementById("iconEdit" + id.toString()).classList.add("active");
+    //         }
+    //     }
+    // }
     toggleActive(id) {
+
         //carousel function
         if (this.ready) {
             //close all carousel items
-            let isActive = document.getElementById("item" + id.toString()).classList.contains('active');
-            for (let accommodation in this.accommodationsList) {
+            let isActive = document.getElementById("item" + id).classList.contains('active');
+            for (let item in this.accommodationsList) {
                 // console.log(this.accommodationsList, id);
-                document.getElementById("item" + this.accommodationsList[accommodation].id.toString()).classList.remove("active");
-                document.getElementById("item" + this.accommodationsList[accommodation].id.toString()).classList.add("hidden");
-                document.getElementById("iconArrow" + this.accommodationsList[accommodation].id.toString()).classList.remove("ion-md-arrow-dropdown");
-                document.getElementById("iconArrow" + this.accommodationsList[accommodation].id.toString()).classList.add("ion-md-arrow-dropright");
-                document.getElementById("iconEdit" + this.accommodationsList[accommodation].id.toString()).classList.remove("active");
-                document.getElementById("iconEdit" + this.accommodationsList[accommodation].id.toString()).classList.add("hidden");
+                document.getElementById("item" + id).classList.remove("active");
+                document.getElementById("item" + id).classList.add("hidden");
+                document.getElementById("iconArrow" + id).classList.remove("ion-md-arrow-dropdown");
+                document.getElementById("iconArrow" + id).classList.add("ion-md-arrow-dropright");
+                document.getElementById("iconEdit" + id).classList.remove("active");
+                document.getElementById("iconEdit" + id).classList.add("hidden");
             }
             if (!isActive) {
                 //open active carousel item
-                document.getElementById("item" + id.toString()).classList.remove("hidden");
-                document.getElementById("item" + id.toString()).classList.add("active");
-                document.getElementById("iconArrow" + id.toString()).classList.remove("ion-md-arrow-dropright");
-                document.getElementById("iconArrow" + id.toString()).classList.add("ion-md-arrow-dropdown");
-                document.getElementById("iconEdit" + id.toString()).classList.remove("hidden");
-                document.getElementById("iconEdit" + id.toString()).classList.add("active");
+                document.getElementById("item" + id).classList.remove("hidden");
+                document.getElementById("item" + id).classList.add("active");
+                document.getElementById("iconArrow" + id).classList.remove("ion-md-arrow-dropright");
+                document.getElementById("iconArrow" + id).classList.add("ion-md-arrow-dropdown");
+                document.getElementById("iconEdit" + id).classList.remove("hidden");
+                document.getElementById("iconEdit" + id).classList.add("active");
             }
         }
     }
 
-    editAccommodationUserPage(accommodation) {
-        this.navCtrl.push(EditAccommodationUserPage, {accommodation: accommodation});
-    }
     editAccommodationPage(accommodation) {
-        // this.navCtrl.push(EditAccommodationPage, {accommodation: accommodation});
+        console.log("editAccommodation", accommodation);
+        this.navCtrl.push(EditAccommodationPage, {accommodation: accommodation});
     }
+
+    editAccommodationUserPage(accommodation, user) {
+        console.log("editAccommodationUser", accommodation, user);
+
+        this.navCtrl.push(EditAccommodationUserPage, {accommodation: accommodation, user: user});
+    }
+
+//     editAccommodationAppointmentPage(accommodation){
+//     console.log("editAccommodationAppointmentsPage", accommodation);
+//     }
 }

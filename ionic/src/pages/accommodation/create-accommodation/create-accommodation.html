@@ -1,0 +1,63 @@
+<!--
+  Generated template for the CreateUserPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Create Accommodation</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <form [formGroup]="accommodationForm" (ngSubmit)="logForm()">
+        <ion-item>
+            <ion-label>Name</ion-label>
+            <ion-input type="text" formControlName="name"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>email</ion-label>
+            <ion-input type="text" formControlName="email"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Country</ion-label>
+            <ion-input type="text" formControlName="country"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>City</ion-label>
+            <ion-input type="text" formControlName="city"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Street</ion-label>
+            <ion-input type="text" formControlName="street"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Streetnumber</ion-label>
+            <ion-input type="text" formControlName="streetNumber"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Postcode</ion-label>
+            <ion-input type="text" formControlName="postcode"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Phone</ion-label>
+            <ion-input type="text" formControlName="phone"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Phone Countrycode</ion-label>
+            <ion-input type="text" formControlName="phoneCountrycode"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="messageString" text-wrap>
+            {{messageString}}
+        </ion-item>
+        <button ion-button type="submit" [disabled]="!accommodationForm.valid">Submit</button>
+
+    </form>
+</ion-content>

@@ -22,20 +22,16 @@
             <ion-list-header color="primary">
                 <h2>{{accommodation.name}}</h2>
                 <button ion-button clear item-right large>
-                    <ion-icon id="iconEdit{{accommodation.id}}" name="create" class="hidden white" (click)="editAccommodationPage(accommodation)"></ion-icon>
+                    <ion-icon id="iconEdit{{accommodation.id}}" name="create" class="hidden white"
+                              (click)="editAccommodationPage(accommodation)"></ion-icon>
                 </button>
                 <button ion-button clear item-right large>
-                    <ion-icon id="iconArrow{{accommodation.id}}" name="arrow-dropright" class="white" (click)="toggleActive(accommodation.id)"></ion-icon>
+                    <ion-icon id="iconArrow{{accommodation.id}}" name="arrow-dropright" class="white"
+                              (click)="toggleActive(accommodation.id)"></ion-icon>
                 </button>
             </ion-list-header>
-            <ion-list id="item{{accommodation.id}}" class="hidden randomclass">
+            <ion-list id="item{{accommodation.id}}" class="hidden">
 
-                <ion-item *ngIf="accommodation.price">
-                    € {{accommodation.price}}
-                    <p item-right class="blue">
-                        price
-                    </p>
-                </ion-item>
                 <ion-item>
                     {{accommodation.email}}
                     <p item-right class="blue">
@@ -55,7 +51,8 @@
                     </p>
                 </ion-item>
                 <ion-item *ngIf="accommodation.street">
-                    {{accommodation.street}} {{accommodation.streetNumber !== undefined ? accommodation.streetNumber: "" }}
+                    {{accommodation.street}} {{accommodation.streetNumber !== undefined ? accommodation.streetNumber: ""
+                    }}
                     <p item-right class="blue">
                         street
                     </p>
@@ -67,11 +64,56 @@
                     </p>
                 </ion-item>
                 <ion-item *ngIf="accommodation.phone">
-                    {{accommodation.phoneCountry !== undefined ? "+ " + accommodation.phoneCountry: "" }} {{accommodation.phone}}
+                    {{accommodation.phoneCountrycode !== undefined ? "+ " + accommodation.phoneCountrycode: "" }}
+                    {{accommodation.phone}}
                     <p item-right class="blue">
                         phone
                     </p>
                 </ion-item>
+                <ng-container *ngIf="accommodation.users.length > 0">
+                    <ion-item-divider>
+                        Accommodation Appointments
+                    </ion-item-divider>
+                    <br/>
+                    <ion-list *ngFor="let user of accommodation.users">
+                        <ion-list-header color="secondary">
+                            <h2>{{user.id + " " }}{{user.firstname + " " }}{{user.lastname}}</h2>
+                            <button ion-button clear item-right large>
+                                <ion-icon id="iconEdit{{accommodation.id}}_{{user.id}}" name="create" class="hidden white" (click)="editAccommodationUserPage(accommodation, user)"></ion-icon>
+                            </button>
+                            <button ion-button clear item-right large>
+                                <ion-icon id="iconArrow{{accommodation.id + '_' + user.id}}" name="arrow-dropright" class="white" (click)="toggleActive(accommodation.id.toString()+'_'+user.id.toString())"></ion-icon>
+                            </button>
+                        </ion-list-header>
+                        <ion-list id="item{{accommodation.id+'_'+user.id}}" class="hidden">
+                        <!--<ion-list id="item{{accommodation.id+'_'+user.id}}" >-->
+                            <ion-item *ngIf="user.pivot.price">
+                                € {{user.pivot.price}}
+                                <p item-right class="blue">
+                                    price
+                                </p>
+                            </ion-item>
+                            <ion-item>
+                                {{user.pivot.dateArrival}}
+                                <p item-right class="blue">
+                                    date arrival
+                                </p>
+                            </ion-item>
+                            <ion-item>
+                                {{user.pivot.dateDepartment}}
+                                <p item-right class="blue">
+                                    date department
+                                </p>
+                            </ion-item>
+                        </ion-list>
+
+                        <!---->
+                        <!--{{user.id}}-->
+                        <!--{{user.firstname}}{{user.lastname}}-->
+                        <!--{{user.pivot.price}}-->
+                    </ion-list>
+
+                </ng-container>
 
             </ion-list>
         </ion-list>

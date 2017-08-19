@@ -54,7 +54,7 @@ export class EditUserPage {
         this.user = this.navParams.data.user;
         console.log(this.navParams.data.user);
 
-        console.log(this.user.discount);
+        console.log(this.user.discountTotal);
 
         //TODO: validating, ex: length
         this.userForm = this.formBuilder.group({
@@ -62,14 +62,14 @@ export class EditUserPage {
             lastname: [this.user.lastname, Validators.required],
             email: [this.user.email, Validators.required],
             phone: [this.user.phone, Validators.required],
-            phoneCountry: [this.user.phoneCountry],
+            phoneCountrycode: [this.user.phoneCountrycode],
             nickname: [this.user.nickname],
             country: [this.user.country],
             city: [this.user.city],
             street: [this.user.street],
             streetNumber: [this.user.streetNumber],
             postcode: [this.user.postcode],
-            discount: [this.user.discount],
+            discountTotal: [this.user.discountTotal],
             discountDescription: [this.user.discountDescription]
         });
 
@@ -93,14 +93,14 @@ export class EditUserPage {
                 lastname: this.userForm.value.lastname,
                 email: this.userForm.value.email,
                 phone: this.userForm.value.phone,
-                phoneCountry: this.userForm.value.phoneCountry,
+                phoneCountrycode: this.userForm.value.phoneCountrycode,
                 nickname: this.userForm.value.nickname,
                 country: this.userForm.value.country,
                 city: this.userForm.value.city,
                 street: this.userForm.value.street,
                 streetNumber: this.userForm.value.streetNumber,
                 postcode: this.userForm.value.postcode,
-                discount: this.userForm.value.discount,
+                discountTotal: this.userForm.value.discountTotal,
                 discountDescription: this.userForm.value.discountDescription
             },
             activeUser: {
@@ -126,7 +126,7 @@ export class EditUserPage {
                     this.user.lastname = res.json().lastname;
                     this.user.email = res.json().email;
                     this.user.phone = res.json().phone;
-                    this.user.phoneCountry = res.json().phoneCountrycode;
+                    this.user.phoneCountrycode = res.json().phoneCountrycode;
                     this.user.nickname = res.json().nickname;
                     this.user.country = res.json().country;
                     this.user.city = res.json().city;
@@ -134,10 +134,12 @@ export class EditUserPage {
                     this.user.streetNumber = res.json().streetNumber;
                     this.user.postcode = res.json().postcode;
                     this.user.sessionId = res.json().sessionId;
-                    this.user.discount = res.json().discountTotal;
+                    this.user.discountTotal = res.json().discountTotal;
                     this.user.discountDescription = res.json().discountDescription;
-
-                    localStorage.setItem("currentUser", JSON.stringify(this.user));
+                    
+                    if (this.userApi.id === this.user.id) {
+                        localStorage.setItem("currentUser", JSON.stringify(this.user));
+                    }
                 }
                 this.navCtrl.setRoot(UserDetailsPage);
             }, (err) => {

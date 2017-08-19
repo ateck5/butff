@@ -81,7 +81,7 @@ export class LoginPage {
                 this.user.lastname = res.json().lastname;
                 this.user.email = res.json().email;
                 this.user.phone = res.json().phone;
-                this.user.phoneCountry = res.json().phoneCountrycode;
+                this.user.phoneCountrycode = res.json().phoneCountrycode;
                 this.user.nickname = res.json().nickname;
                 this.user.country = res.json().country;
                 this.user.city = res.json().city;
@@ -89,7 +89,7 @@ export class LoginPage {
                 this.user.streetNumber = res.json().streetNumber;
                 this.user.postcode = res.json().postcode;
                 this.user.sessionId = res.json().sessionId;
-                this.user.discount = res.json().discountTotal;
+                this.user.discountTotal = res.json().discountTotal;
                 this.user.discountDescription = res.json().discountDescription;
 
                 localStorage.setItem("currentUser", JSON.stringify(this.user));

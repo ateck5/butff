@@ -23,13 +23,13 @@ class CreateUsersTable extends Migration
                 $table->string('nickname', 191)->nullable();
                 $table->string('firstname', 191);
                 $table->string('lastname', 191);
-                $table->string('email', 191);
+                $table->string('email', 191)->nullable();
                 $table->string('country', 191)->nullable();
                 $table->string('city', 191)->nullable();
                 $table->string('street', 191)->nullable();
                 $table->string('streetNumber', 191)->nullable();
                 $table->string('postcode', 191)->nullable();
-                $table->string('phone', 191);
+                $table->string('phone', 191)->nullable();
                 $table->string('phoneCountrycode', 191)->nullable();
                 $table->float('discountTotal')->nullable();
                 $table->string('discountDescription', 191)->nullable();

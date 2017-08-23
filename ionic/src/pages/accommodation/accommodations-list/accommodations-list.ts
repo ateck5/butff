@@ -48,6 +48,37 @@ export class AccommodationsListPage {
         this.http.get(url)
             .subscribe(res => {
                 this.accommodationsList = res.json();
+                console.log(this.accommodationsList);
+                for (let accommodation in this.accommodationsList) {
+                    if (this.accommodationsList[accommodation].users.length > 0) {
+                        for (let user in this.accommodationsList[accommodation].users) {
+                            let dateArrivalArray = this.accommodationsList[accommodation].users[user].pivot.dateArrival.split('-').join(' ').split(':').join(' ').split(' ');
+                            let dateDepartmentArray = this.accommodationsList[accommodation].users[user].pivot.dateDepartment.split('-').join(' ').split(':').join(' ').split(' ');
+                            const months = ["", "January", "Februari", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                            let dateArrivalObject = {
+                                year:dateArrivalArray[0],
+                                month:months[parseInt(dateArrivalArray[1])],
+                                day:dateArrivalArray[2],
+                                hours:dateArrivalArray[3],
+                                minutes:dateArrivalArray[4],
+                                seconds:dateArrivalArray[5]
+                            };
+                            let dateDepartmentObject = {
+                                year:dateDepartmentArray[0],
+                                month:months[parseInt(dateDepartmentArray[1])],
+                                day:dateDepartmentArray[2],
+                                hours:dateDepartmentArray[3],
+                                minutes:dateDepartmentArray[4],
+                                seconds:dateDepartmentArray[5]
+                            };
+                            this.accommodationsList[accommodation].users[user].dateArrivalObject = dateArrivalObject;
+                            this.accommodationsList[accommodation].users[user].dateDepartmentObject = dateDepartmentObject;
+                            console.log( this.accommodationsList[accommodation].users[user].dateArrivalObject,  this.accommodationsList[accommodation].users[user].dateDepartmentObject);
+                            console.log('user', this.accommodationsList[accommodation].users[user]);
+                        }
+                        console.log(this.accommodationsList[accommodation].name, this.accommodationsList[accommodation].users);
+                    }
+                }
                 this.ready = true;
             }, (err) => {
                 console.log('err', err);
@@ -56,54 +87,6 @@ export class AccommodationsListPage {
 
     }
 
-    // private getAccommodationsList() {
-    //     let url = Globals.globals.url + "accommodationUser/" + this.user.id;
-    //     // let url = "http://localhost:8000/api/accommodationUser/" + this.currentUser.id;
-    //     this.http.get(url)
-    //         .subscribe(res => {
-    //             this.accommodationsList = res.json();
-    //             this.getAccommodations();
-    //         }, (err) => {
-    //             console.log('err', err);
-    //             console.log(err._body);
-    //         });
-    // }
-    //
-    // private getAccommodations() {
-    //     //TODO: handle this in one request
-    //     //get all accommodations from the user, one by one
-    //     for (let accommodationUser in this.accommodationsUser) {
-    //         let url = Globals.globals.url + "accommodation/" + this.accommodationsUser[accommodationUser].id;
-    //         // let url = "http://localhost:8000/api/accommodation/" + this.accommodationsUser[accommodationUser].id;
-    //         this.http.get(url)
-    //             .subscribe(res => {
-    //                 let result = res.json();
-    //                 //price, datearrival and datedepartment are from accommodationsuser
-    //                 this.accommodations.push({
-    //                     id: result.id,
-    //                     name: result.name,
-    //                     email: result.email,
-    //                     country: result.country,
-    //                     city: result.city,
-    //                     street: result.street,
-    //                     streetNumber: result.streetNumber,
-    //                     postcode: result.postcode,
-    //                     phone: result.phone,
-    //                     phoneCountry: result.phoneCountrycode,
-    //                     price: this.accommodationsUser[accommodationUser].price,
-    //                     dateArrival: this.accommodationsUser[accommodationUser].dateArrival,
-    //                     dateDepartment: this.accommodationsUser[accommodationUser].dateDepartment
-    //                 });
-    //                 console.log(this.accommodations);
-    //                 console.log(res.json());
-    //             }, (err) => {
-    //                 console.log('err', err);
-    //                 console.log(err._body);
-    //             });
-    //     }
-    //     this.ready = true;
-    // }
-
     ionViewDidLoad() {
         console.log('ionViewDidLoad AccommodationsPage');
         if (localStorage.getItem("currentUser") === null) {
@@ -111,31 +94,6 @@ export class AccommodationsListPage {
         }
     }
 
-    // toggleActive(id) {
-    //     //carousel function
-    //     if (this.ready) {
-    //         //close all carousel items
-    //         let isActive = document.getElementById("item" + id.toString()).classList.contains('active');
-    //         for (let item in this.accommodationsList) {
-    //             // console.log(this.accommodationsList, id);
-    //             document.getElementById("item" + this.accommodationsList[item].id.toString()).classList.remove("active");
-    //             document.getElementById("item" + this.accommodationsList[item].id.toString()).classList.add("hidden");
-    //             document.getElementById("iconArrow" + this.accommodationsList[item].id.toString()).classList.remove("ion-md-arrow-dropdown");
-    //             document.getElementById("iconArrow" + this.accommodationsList[item].id.toString()).classList.add("ion-md-arrow-dropright");
-    //             document.getElementById("iconEdit" + this.accommodationsList[item].id.toString()).classList.remove("active");
-    //             document.getElementById("iconEdit" + this.accommodationsList[item].id.toString()).classList.add("hidden");
-    //         }
-    //         if (!isActive) {
-    //             //open active carousel item
-    //             document.getElementById("item" + id.toString()).classList.remove("hidden");
-    //             document.getElementById("item" + id.toString()).classList.add("active");
-    //             document.getElementById("iconArrow" + id.toString()).classList.remove("ion-md-arrow-dropright");
-    //             document.getElementById("iconArrow" + id.toString()).classList.add("ion-md-arrow-dropdown");
-    //             document.getElementById("iconEdit" + id.toString()).classList.remove("hidden");
-    //             document.getElementById("iconEdit" + id.toString()).classList.add("active");
-    //         }
-    //     }
-    // }
     toggleActive(id) {
 
         //carousel function
@@ -171,7 +129,11 @@ export class AccommodationsListPage {
     editAccommodationUserPage(accommodation, user) {
         console.log("editAccommodationUser", accommodation, user);
 
-        this.navCtrl.push(EditAccommodationUserPage, {accommodation: accommodation, user: user});
+        this.navCtrl.push(EditAccommodationUserPage, {
+            accommodation: accommodation,
+            user: user,
+            from: 'accommodations-list'
+        });
     }
 
 //     editAccommodationAppointmentPage(accommodation){

@@ -28,27 +28,40 @@ export class MyApp {
     rootPage: any = LoginPage;
     // rootPage: any = HomePage;
 
-    pages: Array<{ title: string, component: any, icon?: string }>;
+    // pages: Array<{ title: string, component: any, icon?: string }>;
+    pagesUser: Array<{ title: string, component: any, icon?: string }>;
+    pagesAppointment: Array<{ title: string, component: any, icon?: string }>;
+    pagesAccommodation: Array<{ title: string, component: any, icon?: string }>;
+    pageLogin: {title: string, component: any, icon?:string};
+    pageLogout: {title: string, component: any, icon?:string};
 
     constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
         this.initializeApp();
 
         // used for an example of ngFor and navigation
-        this.pages = [
-            {title: 'Home', component: HomePage},
+        this.pageLogin = {title: 'Home', component: HomePage};
+
+        this.pagesUser = [
             {title: 'User List', component: UserListPage},
-            {title: 'Appointments List', component: AppointmentsListPage},
-            {title: 'Accommodations List', component: AccommodationsListPage},
             {title: 'Create User', component: CreateUserPage},
+            {title: 'User Details', component: UserDetailsPage},
+        ];
+
+        this.pagesAppointment = [
+            {title: 'Appointments List', component: AppointmentsListPage},
             {title: 'Create Appointment', component: CreateAppointmentPage},
             {title: 'Link Appointment User', component: CreateAppointmentUserPage},
-            {title: 'Create Accommodation', component: CreateAccommodationPage},
-            {title: 'Link Accommodation User', component: CreateAccommodationUserPage},
-            {title: 'User Details', component: UserDetailsPage},
             {title: 'Appointments', component: AppointmentsPage},
-            {title: 'Accommodations', component: AccommodationsPage},
-            {title: 'Logout', component: LogoutPage, icon: "log-out"}
         ];
+
+        this.pagesAccommodation = [
+            {title: 'Accommodations List', component: AccommodationsListPage},
+            {title: 'Link Accommodation User', component: CreateAccommodationUserPage},
+            {title: 'Create Accommodation', component: CreateAccommodationPage},
+            {title: 'Accommodations', component: AccommodationsPage},
+        ];
+
+        this.pageLogout = {title: 'Logout', component: LogoutPage, icon: "log-out"};
 
     }
 

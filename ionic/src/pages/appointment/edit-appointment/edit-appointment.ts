@@ -65,7 +65,7 @@ export class EditAppointmentPage {
         this.appointmentForm = this.formBuilder.group({
             name: [this.appointment.name, Validators.required],
             type: [this.appointment.type, Validators.required],
-            description: [this.appointment.description, Validators.required],
+            description: [this.appointment.description],
             country: [this.appointment.country],
             city: [this.appointment.city],
             street: [this.appointment.street],

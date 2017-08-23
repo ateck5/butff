@@ -55,9 +55,11 @@ export class CreateAccommodationUserPage {
         this.accommodationUserForm = this.formBuilder.group({
             user: ['', Validators.required],
             accommodation: ['', Validators.required],
-            price: ['', Validators.required],
+            price: [''],
+            description: [''],
+            roomNumber: [''],
             dateArrival: ['', Validators.required],
-            dateDepartment: ['', Validators.required],
+            dateDepartment: [''],
         });
     }
 
@@ -107,7 +109,9 @@ export class CreateAccommodationUserPage {
                 accommodation: this.accommodationUserForm.value.accommodation,
                 price: this.accommodationUserForm.value.price,
                 dateArrival: this.accommodationUserForm.value.dateArrival.replace("T", " ").replace("Z", ""),
-                dateDepartment: this.accommodationUserForm.value.dateDepartment.replace("T", " ").replace("Z", "")
+                dateDepartment: this.accommodationUserForm.value.dateDepartment.replace("T", " ").replace("Z", ""),
+                roomNumber: this.accommodationUserForm.value.roomNumber,
+                description: this.accommodationUserForm.value.description
             },
             activeUser: {
                 id: this.userApi.id,

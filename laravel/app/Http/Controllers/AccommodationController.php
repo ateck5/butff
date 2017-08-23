@@ -53,6 +53,8 @@ class AccommodationController extends Controller
         $accommodationObject->postcode = $request['newAccommodation']['postcode'];
         $accommodationObject->phone = $request['newAccommodation']['phone'];
         $accommodationObject->phoneCountryCode = $request['newAccommodation']['phoneCountrycode'];
+        $accommodationObject->maxRooms = $request['newAccommodation']['maxRooms'];
+        $accommodationObject->description = $request['newAccommodation']['description'];
 
         try {
             $accommodationObject->save();
@@ -119,6 +121,8 @@ class AccommodationController extends Controller
         $accommodation->postcode = $request['accommodation']['postcode'];
         $accommodation->phone = $request['accommodation']['phone'];
         $accommodation->phoneCountrycode = $request['accommodation']['phoneCountrycode'];
+        $accommodation->maxRooms = $request['accommodation']['maxRooms'];
+        $accommodation->description = $request['accommodation']['description'];
 
         $accommodation->update();
 

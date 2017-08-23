@@ -20,9 +20,10 @@
     <ion-list>
         <ion-list *ngFor="let appointment of appointments;">
             <ion-list-header color="primary">
-                <h2>{{appointment.name}}</h2>
+                <h2 text-wrap>{{appointment.timeStart + " " + appointment.name + " " + appointment.type }}</h2>
                 <button ion-button clear item-right large>
-                    <ion-icon id="iconEdit{{appointment.id}}" name="create" class="hidden white" (click)="editAppointmentPage(appointment)"></ion-icon>                </button>
+                    <ion-icon id="iconEdit{{appointment.id}}" name="create" class="hidden white" (click)="editAppointmentPage(appointment)"></ion-icon>
+                </button>
                 <button ion-button clear item-right large>
                     <ion-icon id="iconArrow{{appointment.id}}" name="arrow-dropright" class="white" (click)="toggleActive(appointment.id)"></ion-icon>
                 </button>

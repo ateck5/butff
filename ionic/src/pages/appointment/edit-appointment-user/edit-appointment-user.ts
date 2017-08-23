@@ -1,6 +1,6 @@
 import {Component, Injectable} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Http, Headers} from "@angular/http";
 import * as Globals from "../../../globals/globals"
 import {LoginPage} from "../../auth/login/login";
@@ -42,6 +42,8 @@ export class EditAppointmentUserPage {
     appointmentUser;
     apiRequestData;
     userApi;
+    usersList;
+    appointmentsList;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private http: Http, private myService: myHTTPService) {
         this.userApi = JSON.parse(localStorage.getItem("currentUser"));
@@ -50,19 +52,56 @@ export class EditAppointmentUserPage {
         if (this.navParams.data.appointment.hasOwnProperty("pivot")){
             this.appointmentUser = {
                 id: this.navParams.data.appointment.pivot.id,
-            };
+                user: this.navParams.data.appointment.pivot.user_id,
+                appointment: this.navParams.data.appointment.pivot.appointment_id
+            }
         }else if (this.navParams.data.user.hasOwnProperty("pivot")){
             this.appointmentUser = {
                 id: this.navParams.data.user.pivot.id,
+                user: this.navParams.data.user.pivot.user_id,
+                appointment: this.navParams.data.user.pivot.appointment_id
             };
         }
 
 
         //TODO: validating, ex: length
         this.appointmentUserForm = this.formBuilder.group({
-
+            user: [this.appointmentUser.user, Validators.required],
+            appointment: [this.appointmentUser.appointment, Validators.required],
         });
+
+        this.getUsers();
     }
+
+    getUsers() {
+        let url = Globals.globals.url + "user";
+        this.http.get(url)
+            .subscribe(res => {
+                this.usersList = res.json();
+
+                console.log(this.usersList);
+                this.getAppointments()
+            }, (err) => {
+                console.log('err', err);
+                console.log(err._body);
+            });
+    }
+
+    getAppointments(){
+        let url = Globals.globals.url + "appointment";
+        this.http.get(url)
+            .subscribe(res => {
+                this.appointmentsList = res.json();
+                console.log(this.appointmentsList);
+                // this.ready = true;
+                // this.appointmentUserForm
+                //     .setValue(user, { onlySelf: true });
+            }, (err) => {
+                console.log('err', err);
+                console.log(err._body);
+            });
+    }
+
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad EditAppointmentUserPage');
@@ -78,6 +117,8 @@ export class EditAppointmentUserPage {
 
         this.apiRequestData = {
             appointment: {
+                user : this.appointmentUserForm.value.user,
+                appointment : this.appointmentUserForm.value.appointment
 
             },
             activeUser: {

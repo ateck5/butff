@@ -50,6 +50,8 @@ class User extends Authenticatable
     }
 
     public function accommodations() {
-        return $this->belongsToMany('App\Accommodation', 'accommodations_users', 'user_id', 'accommodation_id')->withPivot('price', 'dateArrival', 'dateDepartment', 'year', 'id')->withTimestamps();
+        return $this->belongsToMany('App\Accommodation', 'accommodations_users', 'user_id', 'accommodation_id')
+            ->withPivot('price', 'dateArrival', 'dateDepartment', 'year', 'id', 'roomNumber', 'description')
+            ->withTimestamps();
     }
 }

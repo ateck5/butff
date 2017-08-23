@@ -36,7 +36,7 @@ class myHTTPService {
 })
 export class AccommodationsPage {
 
-    accommodations: Array<{ id: number, name: string, email: string, country: string, city: string, street: string, streetNumber?: string, postcode: string, phone: string, phoneCountrycode?: string, price?: string, dateArrival: any, dateDepartment: any }>;
+    accommodations: Array<any>;
     user: Globals.user;
     accommodationsUser;
     ready: boolean = false;
@@ -95,11 +95,32 @@ export class AccommodationsPage {
         //TODO: handle this in one request
         //get all accommodations from the user, one by one
         for (let accommodationUser in this.accommodationsUser) {
-            let url = Globals.globals.url + "accommodation/" + this.accommodationsUser[accommodationUser].id;
+            console.log(this.accommodationsUser, this.accommodationsUser[accommodationUser].accommodation_id);
+            let url = Globals.globals.url + "accommodation/" + this.accommodationsUser[accommodationUser].accommodation_id;
             // let url = "http://localhost:8000/api/accommodation/" + this.accommodationsUser[accommodationUser].id;
             this.http.get(url)
                 .subscribe(res => {
                     let result = res.json();
+                    console.log('result',result);
+                    let dateArrivalArray = this.accommodationsUser[accommodationUser].dateArrival.split('-').join(' ').split(':').join(' ').split(' ');
+                    let dateDepartmentArray = this.accommodationsUser[accommodationUser].dateDepartment.split('-').join(' ').split(':').join(' ').split(' ');
+                    const months = ["", "January", "Februari", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                    let dateArrivalObject = {
+                        year:dateArrivalArray[0],
+                        month:months[parseInt(dateArrivalArray[1])],
+                        day:dateArrivalArray[2],
+                        hours:dateArrivalArray[3],
+                        minutes:dateArrivalArray[4],
+                        seconds:dateArrivalArray[5]
+                    };
+                    let dateDepartmentObject = {
+                        year:dateDepartmentArray[0],
+                        month:months[parseInt(dateDepartmentArray[1])],
+                        day:dateDepartmentArray[2],
+                        hours:dateDepartmentArray[3],
+                        minutes:dateDepartmentArray[4],
+                        seconds:dateDepartmentArray[5]
+                    };
                     //price, datearrival and datedepartment are from accommodationsuser
                     this.accommodations.push({
                         id: result.id,
@@ -112,9 +133,14 @@ export class AccommodationsPage {
                         postcode: result.postcode,
                         phone: result.phone,
                         phoneCountrycode: result.phoneCountrycode,
+                        pivot_id: this.accommodationsUser[accommodationUser].id,
+                        roomNumber: this.accommodationsUser[accommodationUser].roomNumber,
+                        description: this.accommodationsUser[accommodationUser].description,
                         price: this.accommodationsUser[accommodationUser].price,
                         dateArrival: this.accommodationsUser[accommodationUser].dateArrival,
-                        dateDepartment: this.accommodationsUser[accommodationUser].dateDepartment
+                        dateDepartment: this.accommodationsUser[accommodationUser].dateDepartment,
+                        dateArrivalObject: dateArrivalObject,
+                        dateDepartmentObject: dateDepartmentObject
                     });
                     console.log(this.accommodations);
                     console.log(res.json());
@@ -159,6 +185,7 @@ export class AccommodationsPage {
     }
 
     editAccommodationUserPage(accommodationUser) {
-        this.navCtrl.push(EditAccommodationUserPage, {accommodationUser: accommodationUser});
+        console.log(accommodationUser);
+        this.navCtrl.push(EditAccommodationUserPage, {accommodationUser: accommodationUser, from: 'accommodations'});
     }
 }

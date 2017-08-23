@@ -48,7 +48,7 @@ export class CreateAppointmentPage {
         this.appointmentForm = this.formBuilder.group({
             name: ['', Validators.required],
             type: ['', Validators.required],
-            description: ['', Validators.required],
+            description: [''],
             country: [''],
             city: [''],
             street: [''],

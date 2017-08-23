@@ -40,7 +40,17 @@
         </ion-item>
         <ion-item>
             <ion-label>Date Department</ion-label>
-            <ion-datetime displayFormat="YYYY-MM-DD HH:mm:ss" formControlName="dateDepartment"></ion-datetime>    </ion-item>
+            <ion-datetime displayFormat="YYYY-MM-DD HH:mm:ss" formControlName="dateDepartment"></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <ion-label>Room Number</ion-label>
+            <ion-input formControlName="roomNumber"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Description</ion-label>
+            <ion-input formControlName="description"></ion-input>
+        </ion-item>
+
 
         <ion-item *ngIf="messageString" text-wrap>
             {{messageString}}

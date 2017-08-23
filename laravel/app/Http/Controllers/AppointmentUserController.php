@@ -100,7 +100,23 @@ class AppointmentUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $activeUser = User::findOrFail($request['activeUser']['id']);
+        $sessionId = $request['activeUser']['sessionId'];
+        if ($sessionId !== $activeUser['sessionId']) {
+            return response()->json("Error: Credentials did not match", 403);
+        }
+        $appointmentUser = AppointmentsUsers::findOrFail($id);
+
+        //TODO: add updated timestamp
+
+        //TODO: fix datetime format
+        $appointmentUser->user_id = $request['appointment']['user'];
+        $appointmentUser->appointment_id = $request['appointment']['appointment'];
+        $appointmentUser->year = date("Y");
+
+        $appointmentUser->update();
+
+        return response()->json($appointmentUser, 200);
     }
 
     /**

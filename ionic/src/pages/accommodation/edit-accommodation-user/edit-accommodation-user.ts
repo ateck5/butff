@@ -42,33 +42,39 @@ export class EditAccommodationUserPage {
     accommodationUser;
     apiRequestData;
     userApi;
+    usersList;
+    accommodationsList;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private http: Http, private myService: myHTTPService) {
         this.userApi = JSON.parse(localStorage.getItem("currentUser"));
+        console.log(this.navParams.data);
         // this.navParams.get("accommodationUser");
-        console.log(this.navParams.data.user);
-        console.log(this.navParams.data.accommodation);
-        if (this.navParams.data.accommodation.hasOwnProperty("pivot")){
+        // console.log(this.navParams.data.accommodationUser);
+
+        if (this.navParams.data.from === "accommodations"){
             this.accommodationUser = {
-                id: this.navParams.data.accommodation.pivot.id,
-                price: this.navParams.data.accommodation.pivot.price,
-                dateArrival:this.navParams.data.accommodation.pivot.dateArrival,
-                dateDepartment:this.navParams.data.accommodation.pivot.dateDepartment
-            };
-        }else if (this.navParams.data.user.hasOwnProperty("pivot")){
+                id: this.navParams.data.accommodationUser.id,
+                user : this.navParams.data.accommodationUser.user_id,
+                accommodation : this.navParams.data.accommodationUser.accommodation_id,
+                price: this.navParams.data.accommodationUser.price,
+                dateArrival: this.navParams.data.accommodationUser.dateArrival,
+                dateDepartment: this.navParams.data.accommodationUser.dateDepartment,
+                roomNumber: this.navParams.data.accommodationUser.roomNumber,
+                description: this.navParams.data.accommodationUser.description
+            }
+        }else if (this.navParams.data.from === "accommodations-list"){
             this.accommodationUser = {
                 id: this.navParams.data.user.pivot.id,
+                user : this.navParams.data.user.pivot.user_id,
+                accommodation : this.navParams.data.user.pivot.accommodation_id,
                 price: this.navParams.data.user.pivot.price,
-                dateArrival:this.navParams.data.user.pivot.dateArrival,
-                dateDepartment:this.navParams.data.user.pivot.dateDepartment
+                dateArrival: this.navParams.data.user.pivot.dateArrival,
+                dateDepartment: this.navParams.data.user.pivot.dateDepartment,
+                roomNumber: this.navParams.data.user.pivot.roomNumber,
+                description: this.navParams.data.user.pivot.description
             };
         }
-        // this.accommodationUser = {
-        //     id: this.navParams.data.user.pivot.id,
-        //     price: this.navParams.data.user.pivot.price,
-        //     dateArrival:this.navParams.data.user.pivot.dateArrival,
-        //     dateDepartment:this.navParams.data.user.pivot.dateDepartment
-        // };
+        console.log(this.accommodationUser);
 
         //change database datetime format to form datetime format
         let dateArrival = this.accommodationUser.dateArrival.replace(" ", "T") + "Z";
@@ -76,10 +82,45 @@ export class EditAccommodationUserPage {
 
         //TODO: validating, ex: length
         this.accommodationUserForm = this.formBuilder.group({
-            price: [this.accommodationUser.price, Validators.required],
+            user:[this.accommodationUser.user],
+            accommodation: [this.accommodationUser.accommodation],
+            price: [this.accommodationUser.price],
             dateArrival: [dateArrival, Validators.required],
-            dateDepartment: [dateDepartment, Validators.required],
+            dateDepartment: [dateDepartment],
+            roomNumber: [this.accommodationUser.roomNumber],
+            description: [this.accommodationUser.description],
         });
+
+        this.getUsers();
+    }
+
+    getUsers() {
+        let url = Globals.globals.url + "user";
+        this.http.get(url)
+            .subscribe(res => {
+                this.usersList = res.json();
+
+                console.log(this.usersList);
+                this.getAccommodations()
+            }, (err) => {
+                console.log('err', err);
+                console.log(err._body);
+            });
+    }
+
+    getAccommodations(){
+        let url = Globals.globals.url + "accommodation";
+        this.http.get(url)
+            .subscribe(res => {
+                this.accommodationsList = res.json();
+                console.log(this.accommodationsList);
+                // this.ready = true;
+                // this.accommodationUserForm
+                //     .setValue(user, { onlySelf: true });
+            }, (err) => {
+                console.log('err', err);
+                console.log(err._body);
+            });
     }
 
     ionViewDidLoad() {
@@ -102,9 +143,13 @@ export class EditAccommodationUserPage {
 
         this.apiRequestData = {
             accommodation: {
+                user: this.accommodationUserForm.value.user,
+                accommodation: this.accommodationUserForm.value.accommodation,
                 price: this.accommodationUserForm.value.price,
                 dateArrival: this.accommodationUserForm.value.dateArrival.replace("T", " ").replace("Z", ""),
-                dateDepartment: this.accommodationUserForm.value.dateDepartment.replace("T", " ").replace("Z", "")
+                dateDepartment: this.accommodationUserForm.value.dateDepartment.replace("T", " ").replace("Z", ""),
+                roomNumber: this.accommodationUserForm.value.roomNumber,
+                description: this.accommodationUserForm.value.description
             },
             activeUser: {
                 id: this.userApi.id,

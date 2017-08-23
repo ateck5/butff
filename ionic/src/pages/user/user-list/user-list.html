@@ -20,7 +20,7 @@
     <ion-list>
         <ion-list *ngFor="let user of userList;">
             <ion-list-header color="primary">
-                <h2>{{user.firstname + " " + user.lastname}}</h2>
+                <h2 text-wrap>{{user.firstname + " " + user.lastname}}</h2>
                 <button ion-button clear item-right large>
                     <ion-icon id="iconEdit{{user.id}}" name="create" class="hidden white"
                               (click)="editUserPage(user)"></ion-icon>
@@ -81,7 +81,7 @@
                         discount Total
                     </p>
                 </ion-item>
-                <ion-item *ngIf="user.discountDescription">
+                <ion-item text-wrap *ngIf="user.discountDescription">
                     {{user.discountDescription}}
                     <p item-right class="blue">
                         discount description
@@ -95,7 +95,7 @@
                     <br/>
                     <ion-list *ngFor="let appointment of user.appointments">
                         <ion-list-header color="secondary">
-                            <h2>{{appointment.id + " " + appointment.name + " " + appointment.type}}</h2>
+                            <h2 text-wrap>{{appointment.id + " " + appointment.name + " " + appointment.type}}</h2>
                             <button ion-button clear item-right large>
                                 <ion-icon id="iconEdit{{appointment.id}}_{{user.id}}" name="create" class="white"
                                           (click)="editAppointmentUserPage(appointment, user)"></ion-icon>
@@ -111,7 +111,7 @@
                     <br/>
                     <ion-list *ngFor="let accommodation of user.accommodations">
                         <ion-list-header color="secondary">
-                            <h2>{{accommodation.id + " " + accommodation.name}}</h2>
+                            <h2 text-wrap>{{accommodation.name + " " + accommodation.pivot.dateArrival + " "}}{{accommodation.roomNumber  ? accommodation.roomNumber:""}}</h2>
                             <button ion-button clear item-right large>
                                 <ion-icon id="iconEdit{{accommodation.id}}_{{user.id}}" name="create" class="hidden white" (click)="editAccommodationUserPage(accommodation, user)"></ion-icon>
                             </button>

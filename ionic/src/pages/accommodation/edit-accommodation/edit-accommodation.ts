@@ -50,14 +50,16 @@ export class EditAccommodationPage {
         console.log(navParams);
         this.accommodationForm = this.formBuilder.group({
             name: [this.accommodation.name, Validators.required],
-            email: [this.accommodation.email, Validators.required],
-            country: [this.accommodation.country, Validators.required],
-            city: [this.accommodation.city, Validators.required],
-            street: [this.accommodation.street, Validators.required],
+            email: [this.accommodation.email],
+            country: [this.accommodation.country],
+            city: [this.accommodation.city],
+            street: [this.accommodation.street],
             streetNumber: [this.accommodation.streetNumber],
-            postcode: [this.accommodation.postcode, Validators.required],
-            phone: [this.accommodation.phone, Validators.required],
+            postcode: [this.accommodation.postcode],
+            phone: [this.accommodation.phone],
             phoneCountrycode: [this.accommodation.phoneCountrycode],
+            maxRooms: [this.accommodation.maxRooms],
+            description: [this.accommodation.description]
         });
     }
 
@@ -84,7 +86,9 @@ export class EditAccommodationPage {
                 streetNumber : this.accommodationForm.value.streetNumber,
                 postcode : this.accommodationForm.value.postcode,
                 phone : this.accommodationForm.value.phone,
-                phoneCountrycode : this.accommodationForm.value.phoneCountrycode
+                phoneCountrycode : this.accommodationForm.value.phoneCountrycode,
+                maxRooms : this.accommodationForm.value.maxRooms,
+                description: this.accommodationForm.value.description
             },
             activeUser: {
                 id: this.userApi.id,

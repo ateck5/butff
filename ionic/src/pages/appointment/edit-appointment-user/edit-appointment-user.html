@@ -15,7 +15,22 @@
 
 <ion-content padding>
     <form [formGroup]="appointmentUserForm" (ngSubmit)="logForm()">
-
+        <ion-item>
+            <ion-label>User</ion-label>
+            <ion-select formControlName="user">
+                <ion-option *ngFor="let user of usersList" [value]="user.id">{{user.id.toString() + " " + user.firstname
+                    + " " + user.lastname}}
+                </ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label>Appointment</ion-label>
+            <ion-select formControlName="appointment">
+                <ion-option *ngFor="let appointment of appointmentsList" [value]="appointment.id">
+                    {{appointment.id.toString() + " " + appointment.name}}
+                </ion-option>
+            </ion-select>
+        </ion-item>
         <button ion-button type="submit" [disabled]="!appointmentUserForm.valid">Submit</button>
     </form>
 </ion-content>

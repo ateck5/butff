@@ -26,7 +26,7 @@ class CreateAppointmentsTable extends Migration
                 $table->string('postcode', 191)->nullable();
                 $table->dateTime('timeStart');
                 $table->dateTime('timeEnd')->nullable();
-                $table->string('year', 191);
+                $table->string('year', 191)->nullable();
                 $table->timestamps();
             });
         }

@@ -63,6 +63,16 @@
             <ion-input type="text" formControlName="phoneCountrycode"></ion-input>
         </ion-item>
 
+        <ion-item>
+            <ion-label>max rooms</ion-label>
+            <ion-input type="number" formControlName="maxRooms"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>description</ion-label>
+            <ion-input type="text" formControlName="description"></ion-input>
+        </ion-item>
+
         <button ion-button type="submit" [disabled]="!accommodationForm.valid">Submit</button>
     </form>
 </ion-content>

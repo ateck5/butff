@@ -47,14 +47,16 @@ export class CreateAccommodationPage {
 
         this.accommodationForm = this.formBuilder.group({
             name: ['', Validators.required],
-            email: ['', Validators.required],
-            country: ['', Validators.required],
-            city: ['', Validators.required],
-            street: ['', Validators.required],
+            email: [''],
+            country: [''],
+            city: [''],
+            street: [''],
             streetNumber: [''],
-            postcode: ['', Validators.required],
-            phone: ['', Validators.required],
+            postcode: [''],
+            phone: [''],
             phoneCountrycode: [''],
+            maxRooms: [''],
+            description: ['']
         });
     }
 
@@ -77,6 +79,8 @@ export class CreateAccommodationPage {
                 postcode: this.accommodationForm.value.postcode,
                 phone: this.accommodationForm.value.phone,
                 phoneCountrycode: this.accommodationForm.value.phoneCountrycode,
+                maxRooms: this.accommodationForm.value.maxRooms,
+                description: this.accommodationForm.value.description
             },
             activeUser: {
                 id: this.userApi.id,

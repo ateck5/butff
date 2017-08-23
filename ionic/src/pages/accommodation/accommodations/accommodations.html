@@ -20,26 +20,45 @@
     <ion-list>
         <ion-list *ngFor="let accommodation of accommodations;">
             <ion-list-header color="primary">
-                <h2>{{accommodation.name}}</h2>
+                <h2 text-wrap>
+                    {{accommodation.name}}
+                    <br/>{{accommodation.dateArrivalObject.month + " " + accommodation.dateArrivalObject.day + " " + accommodation.dateArrivalObject.hours + ":" + accommodation.dateArrivalObject.minutes}}
+                    {{accommodation.roomNumber ? "\n Roomnumber: " + accommodation.roomNumber:""}}</h2>
                 <button ion-button clear item-right large>
-                    <ion-icon id="iconEdit{{accommodation.id}}" name="create" class="hidden white" (click)="editAccommodationUserPage(accommodation)"></ion-icon>
+                    <ion-icon id="iconEdit{{accommodation.id}}" name="create" class="hidden white"
+                              (click)="editAccommodationUserPage(accommodation)"></ion-icon>
                 </button>
                 <button ion-button clear item-right large>
-                    <ion-icon id="iconArrow{{accommodation.id}}" name="arrow-dropright" class="white" (click)="toggleActive(accommodation.id)"></ion-icon>
+                    <ion-icon id="iconArrow{{accommodation.id}}" name="arrow-dropright" class="white"
+                              (click)="toggleActive(accommodation.id)"></ion-icon>
                 </button>
             </ion-list-header>
             <ion-list id="item{{accommodation.id}}" class="hidden randomclass">
 
                 <ion-item>
-                    {{accommodation.dateArrival}}
+                    {{accommodation.dateArrivalObject.month + " " + accommodation.dateArrivalObject.day}}
+                    <br/>{{accommodation.dateArrivalObject.hours + ":" + accommodation.dateArrivalObject.minutes}}
                     <p item-right class="blue">
                         arrival
                     </p>
                 </ion-item>
                 <ion-item>
-                    {{accommodation.dateDepartment}}
+                    {{accommodation.dateDepartmentObject.month + " " + accommodation.dateDepartmentObject.day}}
+                    <br/>{{accommodation.dateDepartmentObject.hours + ":" + accommodation.dateDepartmentObject.minutes}}
                     <p item-right class="blue">
                         department
+                    </p>
+                </ion-item>
+                <ion-item *ngIf="accommodation.roomNumber">
+                    {{accommodation.roomNumber}}
+                    <p item-right class="blue">
+                        roomnumber
+                    </p>
+                </ion-item>
+                <ion-item text-wrap *ngIf="accommodation.description">
+                    {{accommodation.description}}
+                    <p item-right class="blue">
+                        description
                     </p>
                 </ion-item>
                 <ion-item *ngIf="accommodation.price">
@@ -48,26 +67,27 @@
                         price
                     </p>
                 </ion-item>
-                <ion-item>
+                <ion-item *ngIf="accommodation.email">
                     {{accommodation.email}}
                     <p item-right class="blue">
                         email
                     </p>
                 </ion-item>
-                <ion-item>
+                <ion-item *ngIf="accommodation.country">
                     {{accommodation.country}}
                     <p item-right class="blue">
                         country
                     </p>
                 </ion-item>
-                <ion-item *ngIf="accommodation.country">
+                <ion-item *ngIf="accommodation.city">
                     {{accommodation.city}}
                     <p item-right class="blue">
                         city
                     </p>
                 </ion-item>
                 <ion-item *ngIf="accommodation.street">
-                    {{accommodation.street}} {{accommodation.streetNumber !== undefined ? accommodation.streetNumber: "" }}
+                    {{accommodation.street}} {{accommodation.streetNumber !== undefined ? accommodation.streetNumber: ""
+                    }}
                     <p item-right class="blue">
                         street
                     </p>
@@ -79,7 +99,8 @@
                     </p>
                 </ion-item>
                 <ion-item *ngIf="accommodation.phone">
-                    {{accommodation.phoneCountrycode !== undefined ? "+ " + accommodation.phoneCountrycode: "" }} {{accommodation.phone}}
+                    {{accommodation.phoneCountrycode ? "+ " + accommodation.phoneCountrycode: "" }}
+                    {{accommodation.phone}}
                     <p item-right class="blue">
                         phone
                     </p>

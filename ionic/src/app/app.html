@@ -10,9 +10,25 @@
 
     <ion-content>
         <ion-list>
-            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+            <button menuClose ion-item (click)="openPage(pageLogin)">
+                {{pageLogin.title}}
+            </button>
+
+            <button menuClose ion-item *ngFor="let p of pagesUser" (click)="openPage(p)" color="primary">
                 {{p.title}}
-                <ion-icon name="{{p.icon}}" item-end></ion-icon>
+            </button>
+
+            <button menuClose ion-item *ngFor="let p of pagesAppointment" (click)="openPage(p)">
+                {{p.title}}
+            </button>
+
+            <button menuClose ion-item *ngFor="let p of pagesAccommodation" (click)="openPage(p)" color="primary">
+                {{p.title}}
+            </button>
+
+            <button menuClose ion-item (click)="openPage(pageLogout)">
+                {{pageLogout.title}}
+                <ion-icon name="{{pageLogout.icon}}" item-end></ion-icon>
             </button>
 
         </ion-list>

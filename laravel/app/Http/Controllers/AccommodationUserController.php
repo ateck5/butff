@@ -50,6 +50,8 @@ class AccommodationUserController extends Controller
         $accommodationUserObject->price = number_format(floatval($request['newAccommodationUser']['price']), 2, '.', '');
         $accommodationUserObject->dateArrival = $request['newAccommodationUser']['dateArrival'];
         $accommodationUserObject->dateDepartment = $request['newAccommodationUser']['dateDepartment'];
+        $accommodationUserObject->roomNumber = $request['newAccommodationUser']['roomNumber'];
+        $accommodationUserObject->description = $request['newAccommodationUser']['description'];
         $accommodationUserObject->year = date("Y");
 
         try {
@@ -110,9 +112,13 @@ class AccommodationUserController extends Controller
         //TODO: add updated timestamp
 
         //TODO: fix datetime format
+        $accommodationUser->user_id = $request['accommodation']['user'];
+        $accommodationUser->accommodation_id = $request['accommodation']['accommodation'];
         $accommodationUser->price = number_format(floatval($request['accommodation']['price']), 2, '.', '');
         $accommodationUser->dateArrival = $request['accommodation']['dateArrival'];
         $accommodationUser->dateDepartment = $request['accommodation']['dateDepartment'];
+        $accommodationUser->roomNumber = $request['accommodation']['roomNumber'];
+        $accommodationUser->description = $request['accommodation']['description'];
 
         $accommodationUser->update();
 

@@ -19,7 +19,7 @@
 <ion-content padding>
     <ion-list>
         <ion-list-header color="primary">
-            <h2>{{user.firstname}} {{user.lastname}}</h2>
+            <h2 text-wrap>{{user.firstname}} {{user.lastname}}</h2>
             <!--TODO: Check edit permission for button-->
             <button ion-button clear item-right large>
                 <ion-icon name="create" class="white" (click)="editUsersPage()"></ion-icon>
